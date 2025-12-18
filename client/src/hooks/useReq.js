@@ -16,27 +16,34 @@ export default function useReq(url, initialState) {
 
         if (data) {
             options.headers = {
-                'content-type': 'application/json',
+                'Content-Type': 'application/json',
             }
             
             options.body = JSON.stringify(data);
         }
 
-        if (config.accesToken || isAuth) {
+        // if (config.accessToken || isAuth) {
+        //     options.headers = {
+        //         ...options.headers,
+        //         'X-Authorization': config.accessToken || user?.accessToken,
+        //     }
+        // }
+        if (config.accessToken || user?.accessToken) {
             options.headers = {
                 ...options.headers,
-                'X-Authorization': config.accesToken || user.accesToken,
+                'X-Authorization': config.accessToken || user?.accessToken,
             }
         }
         
         const response = await fetch(`${baseUrl}${url}`, options);
 
         if (!response.ok) {
-            throw response.statusText;
+            throw new Error(response.statusText) ;
         }
 
-        if (response.status === 204) {
-            return {};
+        if (response.status === 204) {  
+            // return {};
+            return null;
         }
 
         const result = await response.json();
