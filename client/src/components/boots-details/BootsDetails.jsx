@@ -2,10 +2,12 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useUserContext } from "../../context/UserContext.jsx";
 import { useState } from "react";
 import useReq from "../../hooks/useReq.js";
+import { useModal } from "../../context/ModalContext.jsx";
 import Roulette from "../Roulette.jsx";
 
 export default function BootsDetails() {
     const { user, isAuth } = useUserContext();
+    const { showModal, showConfirm } = useModal();
     const navigate = useNavigate();
     const {bootsId} = useParams();
     const [ refresh, setRefresh] = useState(false);
@@ -14,27 +16,23 @@ export default function BootsDetails() {
     const isOwner = user?._id === boots?._ownerId;
 
     const delteBootsHandler = async () => {
-        const isConfirmed = confirm(`Are you sure you want to delete that entry?`)
-
-        if (!isConfirmed) return;
+        
         if (!isOwner) return;
         
-        try {
-            await request(`/data/boots/${bootsId}`, 'DELETE');
+        showConfirm(`Are you sure you want to delete that entry?`, async () => {
+            try {
+                await request(`/data/boots/${bootsId}`, 'DELETE');
+                showModal("Boots delete succesfully", "succes")
+                navigate('/boots');
+            } catch (error) {
+                showModal("Unable to delete boots", "error")
+            }
+        })
+    };
 
-            navigate('/boots');
-        } catch (error) {
-            alert('Unable to delete entry!', error.message)
-        }
-    }
+    const refreshHandler = () => setRefresh(state => !state)
 
-    const refreshHandler = () => {
-        setRefresh(state => !state)
-    }
-
-    if (!boots){
-        return <Roulette />
-    }
+    if (!boots) return <Roulette />
 
         return (
             <section className="details-page">

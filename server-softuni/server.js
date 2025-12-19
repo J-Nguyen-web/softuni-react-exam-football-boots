@@ -1348,7 +1348,7 @@
     var seedData = {
         boots: {
             "0aeaf587-7c32-4a5e-8548-09e8446d6521":{
-                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                _ownerId: "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
                 title: "Nike Air Zoom Mercurial Vapor",
                 type: "FG",
                 price: 90,
@@ -1357,8 +1357,8 @@
                 _createdOn: 1766102880467,
                 _id: "944793cf-0119-4e56-8909-89cb8b49d229"
             },
-              "78ef80fc-f30b-4eb3-bc7f-eeabb00f0f10": {
-                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+              "ae5a02a9-e3bf-438b-9eea-adf8f0a2738d": {
+                _ownerId: "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
                 title: "Adidas F50 League TF Messi",
                 type: "TF",
                 price: 80.8,
@@ -1368,7 +1368,7 @@
                 _id: "ae5a02a9-e3bf-438b-9eea-adf8f0a2738d"
             },
             "78ef80fc-f30b-4eb3-bc7f-eeabb00f0f10": {
-                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                _ownerId: "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
                 title: "Puma Ibero V Futsal Shoes",
                 type: "IC",
                 price: 84.99,

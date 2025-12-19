@@ -18,9 +18,9 @@ export default function BootsCreate() {
         try {
             await request('/data/boots', 'POST', data)
 
-            navigate('/catalog')
+            navigate('/boots')
         } catch (error) {
-            alert(error.message)
+            showModal(error.message)
         }
     }
 
@@ -36,33 +36,28 @@ export default function BootsCreate() {
     })
 
     return (
-        <section id="create-page">
+        <section className="create-boots-page">
             <form action={formAction} id="create-new-boots">
-                <div className="container">
+                <div className="create-form">
                     
                     <h1>Create New Boots</h1>
 
-                    <div className="form-group">
                         <label htmlFor="title">Model:</label>
-                        <input type="text" id="title" {...inputData('title')} placeholder="Name of the product.."/></div>
+                        <input type="text" id="title" {...inputData('title')} placeholder="Name of the product.."/>
 
-                    <div className="form-group">
                         <label htmlFor="type">Terrain:</label>
-                        <input type="text" id="type" {...inputData('type')} placeholder="What type.."/></div>
+                        <input type="text" id="type" {...inputData('type')} placeholder="What type.."/>
 
-                    <div className="form-group">
                         <label htmlFor="price">Price:</label>
-                        <input type="text" id="price" {...inputData('price')} placeholder="Product price ..$"/></div>
+                        <input type="text" id="price" {...inputData('price')} placeholder="Product price ..$"/>
 
-                    <div className="form-group">
                         <label htmlFor="image">Image URL:</label>
-                        <input type="text" id="image" {...inputData('image')} placeholder="Https://.."/></div>
+                        <input type="text" id="image" {...inputData('image')} placeholder="Https://.."/>
 
-                    <div className="form-group">
                         <label htmlFor="description">Description:</label>
-                        <input type="text" id="description" {...inputData('description')} placeholder="Put few words about the model.."/></div>
+                        <textarea type="text" id="description" {...inputData('description')} placeholder="Put few words about the model.."/>
 
-                    <input type="submit" className="btn submit" value="Place it" />
+                    <button type="submit" className="btn-submit" >Place it </button>
                 </div>
             </form>
         </section>

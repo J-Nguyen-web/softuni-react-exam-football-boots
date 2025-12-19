@@ -7,11 +7,11 @@ export default function Header() {
         <header className="nav Link home">
             <nav>
                 <Link className="home" to="/"><img alt="" /></Link>
-                <Link to="/catalog" className="nav-link">Catalog</Link>
+                <Link to="/boots" className="nav-link">Catalog</Link>
                 {isAuth
                     ? (
                         <div id="user">
-                            <Link to="/create" className="nav-link">Create boots</Link>
+                            <Link to="/boots/create" className="nav-link">Create boots</Link>
                             <Link to="/logout" className="nav-link">Logout</Link>
                         </div>
                     )

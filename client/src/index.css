@@ -77,6 +77,138 @@ header nav {
   text-shadow: 0 0 6px #ff5252;
 } */
 
+/* -------- REGISTER PAGE -------- */
+.register-page {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 32px;
+  background: url('/public/register.jpg');
+  background-size: cover;
+  border-radius: 20px;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+}
+
+.register-page h1 {
+  position: relative;
+  top: -100px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 22px;
+  color: #b68b09ff;
+  text-shadow: 0 0 8px rgba(255, 214, 0, 0.6);
+}
+
+.register-form label {
+  position:relative;
+  left: 22px;
+  display: inline;
+  margin-bottom: 6px;
+  font-weight: 700;
+  color: #fff8e6ff;
+    text-shadow: 0 0 8px rgba(255, 214, 0, 0.6);
+
+}
+
+.register-form input {
+  width: 90%;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  border-radius: 14px;
+  border: 2px solid #6e4003ff;
+  font-size: 0.95rem;
+  transition: all 0.2 ease;
+}
+
+
+.btn-register {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  padding: 14px 0;
+  border: none;
+  border-radius: 25px;
+  background: #b48909ff;
+  font-weight: 900;
+  font-size: 1rem;
+  color: #fffffeff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-register:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 255, 4, 0.7)
+}
+
+/* -------- LOGIN PAGE -------- */
+.login-page {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 32px;
+  background: url('/public/entrance.jpg');
+  background-size: cover;
+  border-radius: 20px;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+}
+
+.login-page h1 {
+  position: relative;
+  top: -100px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 22px;
+  color: #1ad009ff;
+  text-shadow: 0 0 8px rgba(255, 214, 0, 0.6);
+}
+
+.login-form label {
+  position:relative;
+  left: 22px;
+  display: inline;
+  margin-bottom: 6px;
+  font-weight: 700;
+  color: #fff8e6ff;
+    text-shadow: 0 0 8px rgba(255, 214, 0, 0.6);
+
+}
+
+.login-form input {
+  width: 90%;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  border-radius: 14px;
+  border: 2px solid #0a50dcff;
+  font-size: 0.95rem;
+  transition: all 0.2 ease;
+}
+
+
+.btn-login {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  padding: 14px 0;
+  border: none;
+  border-radius: 25px;
+  background: #0a7000ff;
+  font-weight: 900;
+  font-size: 1rem;
+  color: #fffffeff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 255, 4, 0.7)
+}
+
 /* -------- CATALOG -------- */
 .catalog-page {
   padding: 60px 40px 80px;
@@ -131,6 +263,7 @@ header nav {
   width: 340px;
   
 }
+
 
 .boots-card:hover {
   transform:translateY(-6px) scale(1.02);
@@ -243,7 +376,311 @@ header nav {
 
 }
 
+/* -------- BOOTS DETAILS -------- */
+.details-page {
+  padding: 60px 40px;
+  background: #ffffffff;
+  min-height: 100vh;
+}
 
+.details-card {
+  max-width: 900px;
+  margin: 0 auto 50px;
+  background: #ffffffff;
+  border-radius: 22px;
+  box-shadow: 0 14px 35px rgba(0,0,0,0.18);
+  overflo4: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.details-image {
+  position: relative;
+  top: 50px;
+  width: 340px;
+  height: 220px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, #fddb3a, #00c853, #1e88e5);
+  overflow: hidden;
+  padding: 6px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  border-radius: 20px;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+  transition: transform 0.35 ease, box-shadow 0.35 ease;
+}
+
+.details-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+}
+/* .details-image {
+  background: linear-gradient(135deg, #fddb3a, #00c853, #1e88e5);
+  padding: 14px;
+}
+
+.details-image img {
+  width:100%;
+  height: 100%;
+  object-fit: contain;
+  background: #ffffffff
+  border-radius: 18px;
+  padding: 16px;
+} */
+
+.details-content {
+  padding: 32px;
+}
+
+.details--title {
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 14px;
+  color: #1e88e5;
+}
+
+.details-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom:16px;
+}
+
+.details-terrain{
+  background: #00c853;
+  color: #ffffffff;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 800;
+}
+
+.details-price {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #ff3d00;
+}
+
+.details-description {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 22 px;
+}
+
+.details-actions {
+  display: flex;
+  gap: 14px;
+}
+
+.btn {
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+}
+
+.btn.edit {
+  background: #1e88e5;
+  color: #ffffffff;
+}
+
+.btn.delete {
+  background: #ff3d00;
+  color:#ffffffff;
+}
+
+.comments-section {
+  max-width:900px;
+  margin: auto;
+  background: #ffffffff;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0.15);
+}
+
+.comments-section h3 {
+  margin-bottom: 16px;
+}
+
+.no-comments {
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.comments-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.comment {
+  padding: 14px 16px;
+  background: #ffffffff;
+  border-radial: 14px;
+  margin-bottom: 8px;
+}
+
+.comments-form textarea {
+  width: 100%;
+  min-height: 80px;
+  border-radius: 14px;
+  padding: 14px;
+  border: 2px solid #ddd;
+  margin-bottom: 14px;
+}
+
+.comments-form button {
+  background: linear-gradient(45deg, #00c853, #ffd600);
+  border: none;
+  padding: 14px 26px;
+  border-radius: 30px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+/* -------- BOOTS DETAILS -------- */
+.edit-boots-page {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 32px;
+  /* background: linear-gradient(145deg, #ffffffff, #13a700ff); */
+  background: url('/public/Soccer-Field-Vector.jpg');
+  background-size: cover;
+  border-radius: 20px;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+}
+
+.edit-boots-page h1 {
+  position: relative;
+  top: -100px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 22px;
+  color: #ff9100ff;
+  text-shadow: 0 0 8px rgba(255, 214, 0, 0.6);
+}
+
+.edit-form label {
+  position:relative;
+  left: 22px;
+  display: inline;
+  margin-bottom: 6px;
+  font-weight: 700;
+  color: #745402ff;
+  text-shadow: 0 0 8px rgba(255, 214, 0, 0.6);
+}
+
+.edit-form input,
+.edit-form textarea {
+  width: 90%;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  border-radius: 14px;
+  border: 2px solid #0a50dcff;
+  font-size: 0.95rem;
+  transition: all 0.2 ease;
+}
+
+.edit-form textarea {
+  resize: vertival;
+  min-height: 100px;
+}
+
+.btn-submit {
+  display: block;
+  width: 100%;
+  padding: 14px 0;
+  border: none;
+  border-radius: 25px;
+  background: #ddda6fff;
+  font-weight: 900;
+  font-size: 1rem;
+  color: #ff9c08ff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(255,214, 0, 0.7)
+}
+
+/* -------- BOOTS CREATE -------- */
+.create-boots-page {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 32px;
+  /* background: linear-gradient(145deg, #ffffffff, #13a700ff); */
+  background: url('/public/Soccer-Field-Vector.jpg');
+  background-size: cover;
+  border-radius: 20px;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+}
+
+.create-boots-page h1 {
+  position: relative;
+  top: -100px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 22px;
+  color: #ff9100ff;
+  text-shadow: 0 0 8px rgba(255, 214, 0, 0.6);
+}
+
+.create-form label {
+  position:relative;
+  left: 22px;
+  display: inline;
+  margin-bottom: 6px;
+  font-weight: 700;
+  color: #745402ff;
+    text-shadow: 0 0 8px rgba(255, 214, 0, 0.6);
+
+}
+
+.create-form input,
+.create-form textarea {
+  width: 90%;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  border-radius: 14px;
+  border: 2px solid #0a50dcff;
+  font-size: 0.95rem;
+  transition: all 0.2 ease;
+}
+
+.create-form textarea {
+  resize: vertival;
+  min-height: 100px;
+}
+
+.btn-submit {
+  display: block;
+  width: 100%;
+  padding: 14px 0;
+  border: none;
+  border-radius: 25px;
+  background: #ddda6fff;
+  font-weight: 900;
+  font-size: 1rem;
+  color: #ff9c08ff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(255,214, 0, 0.7)
+}
 
 /* -------- FOOTER -------- */
 .footer {
@@ -329,4 +766,109 @@ header nav {
 .footer-column h4,
 .footer-column p {
   text-shadow: 0 0 8px #ffd600, 0 0 14px #ff3d00;
+}
+
+.roulette-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  position: relative;
+}
+
+.roulette {
+  width: 60px;
+  height: 60px;
+  border: 6px solid rgba(255, 214, 0, 0.3);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  box-shadow: 0 0 14px #ffd600, 0 0 25px #1e88e5;
+  position: relative;
+  /* background: linear-gradient(135deg, #fddb3a, #00c853, #1e88e5); */
+}
+
+.roulette-ball {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 92px;
+  height: 92px;
+  transform: translate(-50%, -50%)
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.modal {
+  position: fixed;
+  top: 70px;
+  right: 170px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  pointer-events: ;
+}
+.modal-content{
+  background: linear-gradient(50deg, #fddb3a, #ffd600);
+  color: #ffffffff;
+  font-weight: 700;
+  padding: 16px 25px;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  pointer-events: all;
+  animation: slideIn 0.5 ease;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 14px;
+  justify-content: flex-end;
+  pointer-events: all;
+}
+
+.modal-actions button {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: transform 0.2 ease, box-shadow 0.2s ease;
+}
+.modal-action button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 11px rgba(0,0,0,0.25);
+}
+
+.modal-actions button:first-child {
+  background: linear-gradient(50deg, #00c853, #ffd600);
+  color: #ffffffff;
+}
+
+.modal-actions button:last-child {
+  background: linear-gradient(50deg, #ff3d00, #f83a3aff);
+  color: #ffffffff;
+}
+
+@keyframes slideIn {
+  from {opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: tranaslate(0);}
+}
+
+.modal.success .modal-content {
+  background: linear-gradient(50deg, #00c853, #ffd600);
+}
+
+.modal.error .modal-content {
+  background: linear-gradient(50deg, #ff3d00, #e3f708ff)
 }

@@ -4,11 +4,14 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
 import { UserProvider } from './context/UserContext.jsx'
+import { ModalProvider } from './context/ModalContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <UserProvider>
-      <App />
-    </UserProvider>
+    <ModalProvider>
+      <UserProvider>
+        <App />
+      </UserProvider>
+    </ModalProvider>
   </BrowserRouter>
 )

@@ -36,9 +36,9 @@ export default function Register() {
     });
     
     return (
-        <section id="register" className="auth">
+        <section className="register-page">
             <form action={formAction} id="registerForm">
-                <div className="container">
+                <div className="register-form">
                     <h1>Register</h1>
                     <label htmlFor="register-email">Email:</label>
                     <input type="email" id="register-email" {...inputData('email')}/>
@@ -49,7 +49,7 @@ export default function Register() {
                     <label htmlFor="re-password">Confirm Password:</label>
                     <input type="password" id="re-password" {...inputData('rePassword')}/>
                     
-                    <input type="submit" className="btn submit" value="Register"/>
+                    <input type="submit" className="btn-register" value="Register"/>
                 </div>
             </form>
         </section>

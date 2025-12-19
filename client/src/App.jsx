@@ -7,24 +7,32 @@ import Register from './components/register/Register.jsx'
 import Logout from './components/logout/Logout.jsx'
 import BootsCreate from './components/boots-create/BootsCreate.jsx'
 import Catalog from './components/catalog/Catalog.jsx'
+import BootsEdit from './components/boots-edit/BootsEdit.jsx'
+import BootsDetails from './components/boots-details/BootsDetails.jsx'
+import ProtectedRoute from './components/ProtectedRoutes.jsx'
 
 function App() {
 
   return (
     <>
+      <Header />
 
-    <Header />
+        <Routes >
+          <Route path='/' element={< Home />} />
+          <Route path='/boots' element={< Catalog />} />
+          <Route path='/boots/details/:bootsId' element={< BootsDetails />} />
 
-      <Routes >
-        <Route path='/' element={< Home />} />
-        <Route path='/create' element={< BootsCreate />} />
-        <Route path='/catalog' element={< Catalog />} />
-        <Route path='/register' element={< Register />} />
-        <Route path='/login' element={< Login />} />
-        <Route path='/logout' element={< Logout />} />
-      </Routes>
-    
-    <Footer />
+          <Route element={<ProtectedRoute />}>
+            <Route path='/boots/create' element={< BootsCreate />} />
+            <Route path='/boots/edit/:bootsId' element={< BootsEdit />} />
+            <Route path='/logout' element={< Logout />} />
+          </Route>
+          
+          <Route path='/register' element={< Register />} />
+          <Route path='/login' element={< Login />} />
+        </Routes>
+      
+      <Footer />
     </>
   )
 }
