@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import BootsCard from "../bootsCard/BootsCard.jsx";
 import useReq from "../../hooks/useReq.js";
+import Roulette from "../Roulette.jsx";
 export default function Catalog() {
 
-    const [articles, setArticles] = useState([]);
+    const [articles, setArticles] = useState(null);
     const { request } = useReq();
     
     useEffect(() => {
@@ -17,6 +18,9 @@ export default function Catalog() {
             }
         })();
     },[])
+
+    if(articles === null) return <Roulette />;
+
     return (
         <section className="catalog-page">
             <h1>Catalog</h1>
