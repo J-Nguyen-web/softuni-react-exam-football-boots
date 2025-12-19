@@ -2,18 +2,30 @@ import { Link } from "react-router-dom";
 
 export default function BootsCard({
     _id,
-    name,
+    title,
     type,
-    image
+    price,
+    image,
+    description,
+
 }) {
     return (
         <div className="boots-card">
-            <img src={image} alt={name} />
-            <div className="short-info">
-                <p className="name">{name}</p>
-                <p className="type">{type}</p>
+            <div className="boots-image">
+                <img src={image} alt={title} />
+                
             </div>
-            <Link to={`boots/${_id}/details`}></Link>
+            
+            <div className="boots-content">
+                <h3 className="boots-name">{title}</h3>
+                <div className="boots-meta">
+                    <span className="boots-terrain">{type}</span>
+                    <span className="boots-price">Price: {price.toFixed(2)} $</span>
+                </div>
+                {/* <p className="boot-description">{description}</p> */}
+                <span className="boots-rating">#######</span>
+                <Link to={`boots/${_id}/details`} className="boots-details-btn">Details</Link>
+            </div>
         </div>
     );
 }
