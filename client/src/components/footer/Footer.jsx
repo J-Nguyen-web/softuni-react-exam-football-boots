@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Footer() {
     return (
         < footer className="footer">
@@ -5,7 +7,7 @@ export default function Footer() {
                 <div className="footer-column">
                     <h4>Shop</h4>
                         <ul>
-                            <li><a>All boots</a></li>
+                            <li><Link to={'/boots'}>All boots</Link></li>
                             <li><a>Firm Ground</a></li>
                             <li><a>Artificial Grass</a></li>
                             <li><a>Turf</a></li>

@@ -1,7 +1,7 @@
 export function validateUser(values) {
     const errors = {}
 
-    if(!values.email || values.email.length < 6 ) {
+    if(!values.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email) || values.email.length < 6 ) {
         errors.email = "Email must be valid format and at least 6 characters";
     }
 

@@ -9,9 +9,17 @@ header nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 32px;
   background: linear-gradient(135deg, #fddb3a, #00c853, #1e88e5);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+.home-logo img{
+  height: 50px;
+  width: auto;
+}
+
+.nav-group{
+  display: flex;
+
 }
 
 .nav-link{
@@ -77,6 +85,40 @@ header nav {
   text-shadow: 0 0 6px #ff5252;
 } */
 
+/* -------- HOME PAGE -------- */
+.home-page {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding-left: 60px;
+
+  background-image: url('/public/cristiano.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff;
+}
+
+.home-text {
+  max-width: 400px;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 20px;
+  border-radius: 14px;
+  position: relative;
+  top: -200px;
+}
+
+.home-text h1 {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.home-text p {
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
 /* -------- REGISTER PAGE -------- */
 .register-page {
   max-width: 500px;
@@ -117,7 +159,7 @@ header nav {
   padding: 10px 14px;
   margin-bottom: 16px;
   border-radius: 14px;
-  border: 2px solid #6e4003ff;
+  /* border: 2px solid #6e4003ff; */
   font-size: 0.95rem;
   transition: all 0.2 ease;
 }
@@ -183,7 +225,7 @@ header nav {
   padding: 10px 14px;
   margin-bottom: 16px;
   border-radius: 14px;
-  border: 2px solid #0a50dcff;
+  /* border: 2px solid #0a50dcff; */
   font-size: 0.95rem;
   transition: all 0.2 ease;
 }
@@ -504,6 +546,15 @@ header nav {
 .comments-section h3 {
   margin-bottom: 16px;
 }
+.comments-section ul {
+  list-style: none;
+}
+
+.comment-text {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
 
 .no-comments {
   font-style: italic;
@@ -520,15 +571,15 @@ header nav {
   padding: 14px 16px;
   background: #ffffffff;
   border-radial: 14px;
-  margin-bottom: 8px;
+  border: 2px solid #545353ff;
 }
 
 .comments-form textarea {
-  width: 100%;
+  width: 90%;
   min-height: 80px;
   border-radius: 14px;
   padding: 14px;
-  border: 2px solid #ddd;
+  /* border: 2px solid #ddd; */
   margin-bottom: 14px;
 }
 
@@ -539,6 +590,14 @@ header nav {
   border-radius: 30px;
   font-weight: 900;
   cursor: pointer;
+}
+
+.comment-author {
+  background-color: #009dffff;
+  border-radius: 6px;
+  padding: 6px;
+  margin: 6px;
+  color: #fbfb00ff
 }
 
 /* -------- BOOTS DETAILS -------- */
@@ -582,7 +641,7 @@ header nav {
   padding: 10px 14px;
   margin-bottom: 16px;
   border-radius: 14px;
-  border: 2px solid #0a50dcff;
+  /* border: 2px solid #0a50dcff; */
   font-size: 0.95rem;
   transition: all 0.2 ease;
 }
@@ -653,7 +712,7 @@ header nav {
   padding: 10px 14px;
   margin-bottom: 16px;
   border-radius: 14px;
-  border: 2px solid #0a50dcff;
+  /* border: 2px solid #0a50dcff; */
   font-size: 0.95rem;
   transition: all 0.2 ease;
 }
@@ -686,7 +745,6 @@ header nav {
 .footer {
   background: linear-gradient(135deg, #fddb3a, #00c853, #1e88e5);
   color: #fff;
-  margin-top: 80px;
   padding-top: 0px;
   padding-bottom: 16px;
   font-family: 'Poppins', sans-serif;
@@ -768,6 +826,8 @@ header nav {
   text-shadow: 0 0 8px #ffd600, 0 0 14px #ff3d00;
 }
 
+/* -------- ROULETTE LOADING -------- */
+
 .roulette-wrapper {
   display: flex;
   justify-content: center;
@@ -805,6 +865,8 @@ header nav {
   }
 }
 
+/* -------- MODAL INFORMATIVE -------- */
+
 .modal {
   position: fixed;
   top: 70px;
@@ -815,7 +877,7 @@ header nav {
   pointer-events: ;
 }
 .modal-content{
-  background: linear-gradient(50deg, #fddb3a, #ffd600);
+  background: linear-gradient(50deg, #eacb2cff, #ffa600ff);
   color: #ffffffff;
   font-weight: 700;
   padding: 16px 25px;
@@ -871,4 +933,41 @@ header nav {
 
 .modal.error .modal-content {
   background: linear-gradient(50deg, #ff3d00, #e3f708ff)
+}
+
+/* -------- LINK SPAN -------- */
+
+.linkTo {
+  background-color: rgba(20, 217, 239, 0.38);
+  color: #ffffff;
+  padding: 3px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+/* -------- FORM VALIDATE -------- */
+
+.form-input {
+  border: 1px solid #ffffffff;
+  padding: 8px;
+  border-radius: 6px;
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: #215cddff;
+}
+
+.input-error {
+  border: 3px solid #e11d1dff;
+  /* border-color: #e11d1dff; */
+}
+
+.error-text {
+  color: #e11d1dff;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.5);
+  margin-top: 3px;
 }

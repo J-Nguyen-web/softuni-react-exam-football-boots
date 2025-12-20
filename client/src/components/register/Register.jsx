@@ -59,7 +59,7 @@ console.log('email')
                 <div className="register-form">
                     <h1>Register</h1>
                     <label htmlFor="register-email">Email:</label>
-                    <input type="email" id="register-email" {...inputData('email')} className={inputClass("email")} />
+                    <input type="email" id="register-email" {...inputData('email')} className={inputClass("email")} placeholder="name@gmail.com"/>
                     {errorText("email")}
 
                     <label htmlFor="register-password">Password</label>

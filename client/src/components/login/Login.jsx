@@ -60,7 +60,7 @@ export default function Login() {
         <div className="login-form">
           <h1>Login</h1>
           <label htmlFor="login-email">Email</label>
-          <input type="email" id="login-email" {...inputData('email')} className={inputClass("email")} />
+          <input type="email" id="login-email" {...inputData('email')} className={inputClass("email")} placeholder="name@gmail.com"/>
           {errorText("email")}
           <label htmlFor="login-password">Password</label>
           <input type="password" id="login-password" {...inputData('password')} className={inputClass("password")} />
