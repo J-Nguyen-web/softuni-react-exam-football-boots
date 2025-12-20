@@ -1,25 +1,25 @@
 import { useContext, useEffect, useState } from "react";
 import UserContext from "../context/UserContext.jsx";
+import { useCallback } from "react";
 
 const baseUrl = 'http://localhost:3030';
 
-export default function useReq(url, initialState) {
-    const { user, isAuth} = useContext(UserContext);
+export default function useReq(initialUrl = null, initialState = []) {
+    const { user } = useContext(UserContext);
     const [data, setData] = useState(initialState)
+    const [url, setUrl] = useState(initialUrl);
 
-    const request = async (url, method, data, config = {}) => {
-        let options = {};
+    const request = useCallback(async (endpoint = url, method = "GET", body = null, config = {}) => {
+        if (!endpoint) throw new Error("Endpoint is undefind");
+        const options = { method,headers: {} };
 
-        if(method) {
-            options.method = method;
-        }
+        // if(method) {
+        //     options.method = method;
+        // }
 
-        if (data) {
-            options.headers = {
-                'Content-Type': 'application/json',
-            }
-            
-            options.body = JSON.stringify(data);
+        if (body) {
+            options.headers['Content-Type'] = 'application/json';
+            options.body = JSON.stringify(body);
         }
 
         // if (config.accessToken || isAuth) {
@@ -35,32 +35,41 @@ export default function useReq(url, initialState) {
             }
         }
         
-        const response = await fetch(`${baseUrl}${url}`, options);
+        const response = await fetch(`${baseUrl}${endpoint}`, options);
 
         if (!response.ok) {
-            throw new Error(response.statusText) ;
+            let error;
+            try {
+                const errData = await response.json();
+                error = new Error(errData.message || "Request Failed");
+            } catch {
+                error = new Error("Request failed");
+            }
+
+            error.status = response.status;
+            throw error;
         }
 
-        if (response.status === 204) {  
-            // return {};
-            return null;
-        }
-
+        if (response.status === 204) return null;
+        
         const result = await response.json();
+        if(method === "GET") setData(result) // ауто упдате стате иф гет
+
         return result;
-    }
+    }, [url ,user ]);
 
     useEffect(() => {
-        if (!url) {
-            return;
-        }
-        request(url)
-        .then(result => setData(result))
-        .catch(err => alert(err))
-    }, [url]);
+        if (url) request(url);
+    }, [url, request]);
+        
+    const refresh = () => {
+        if (url) request(url);
+    }
     return {
         data,
         setData,
-        request
+        request,
+        setUrl,
+        refresh
     };
 }
