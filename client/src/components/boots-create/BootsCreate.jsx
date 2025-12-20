@@ -5,17 +5,22 @@ import useReq from "../../hooks/useReq.js";
 import { parseServerError } from "../../util/errorHandler.js";
 import { useModal } from "../../context/ModalContext.jsx";
 import { validateBoots } from "../../validators/validateBoots.js";
+import { useState } from "react";
 
 export default function BootsCreate() {
     const navigate = useNavigate();
     const {showModal} = useModal()
     const { request } = useReq();
+    const [sending, setSending] = useState(false);
 
     const createBootsHandler = async (values) => {
 
-        // data.rating = Number(data.rating) // todo rating
+        // data.like = Number(data.rating) // todo like
 
         try {
+            if(sending) return; // guard against double submit create
+            setSending(true);
+
             await request('/data/boots', 'POST', {
                 ...values,
                 price: Number(values.price)
@@ -24,6 +29,8 @@ export default function BootsCreate() {
             navigate('/boots')
         } catch (error) {
             showModal(parseServerError(error), "error")
+        } finally {
+            setSending(false);
         }
     }
 
