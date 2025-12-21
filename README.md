@@ -69,14 +69,14 @@ src/
 ## Setup
 
 ```bash
-# Install dependencies
+Install dependencies
 npm install
 
-# Launch client
+Launch client folder
 npm run dev
 
-# Launch server
+Launch server folder
 node server.js
 
-# Server URL
+Server URL
 http://localhost:3030
