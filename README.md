@@ -64,7 +64,7 @@ src/
 │
 │── App.jsx
 │── main.jsx
-
+```
 ## Getting Started
 
 # Install dependencies
