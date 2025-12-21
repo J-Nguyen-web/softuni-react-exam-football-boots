@@ -65,16 +65,16 @@ src/
 │── App.jsx
 │── main.jsx
 ```
-## Getting Started
+# Getting Started
 
-# Install dependencies
+Install dependencies
 npm install
 
-# Start the client
+Start the client
 npm run dev
 
-# Start the server
+Start the server
 node server.js
 
-# Server runs on:
-# http://localhost:3030
+Server runs on:
+http://localhost:3030
