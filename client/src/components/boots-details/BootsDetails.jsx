@@ -14,9 +14,10 @@ export default function BootsDetails() {
     const { bootsId } = useParams();
     const [refresh, setRefresh] = useState(false);
     const [sending, setSending] = useState();
+    const [sendingLike, setSendingLike] = useState();
     const navigate = useNavigate();
     
-    const { data: boots, request } = useReq(`/data/boots/${bootsId}`, null, [refresh])
+    const { data: boots, request } = useReq(`/data/boots/${bootsId}`, null)
 
     const isOwner = user?._id === boots?._ownerId;
 
@@ -29,10 +30,54 @@ export default function BootsDetails() {
     const commentsUrl = `/data/comments?${urlParams.toString()}`;
     const {data: comments =[], request: fetchComments} = useReq(commentsUrl, []);
 
+    const likeUrl = `/data/likes?where=${encodeURIComponent(`bootsId="${bootsId}"`)}`;
+    const { data: likes = [], request: fetchLikes, refresh: refreshLikes} = useReq(likeUrl, []);
+    const [liked, setLiked] = useState(false);
+    const [likeId, setLikeId] = useState(null);
+
+    useEffect(() => {
+        if(!bootsId || !user) return;
+        const fetchAllLikes = async () => {
+            try {
+                const data = await fetchLikes(likeUrl);
+                const userLike = data.find(like => like.userId === user?._id);
+                setLiked(!!userLike);
+                setLikeId(userLike?._id || null);
+            } catch (error) {
+                console.error("Failed to fetch likes:", error);
+            }
+        };
+
+        if (bootsId) fetchAllLikes();
+    }, [bootsId, user?._id, fetchLikes]);
+
+    const likeBootsHandler = async () => {
+        if(!isAuth || sendingLike) return;
+
+            setSendingLike(true);
+        try {
+            if(liked && likeId){
+                await request(`/data/likes/${likeId}`, 'DELETE');
+                setLiked(false);
+                setLikeId(null);
+            } else {
+                const newLike = await request('/data/likes', 'POST', {bootsId, userId: user._id})
+                setLiked(true);
+                setLikeId(newLike._id);
+            }
+            refreshLikes();
+        } catch (error) {
+            console.error("Failed to like/unlike", error);
+            showModal("Unable to process like action!", "error");
+        } finally {
+            setSendingLike(false)
+        }
+    };
+
     // refresh comments when refresh changes
     useEffect(() => {
         fetchComments(commentsUrl, "GET")
-    }, [refresh])
+    }, [refresh, commentsUrl, fetchComments])
 
     const submitHandler = async ({ comment }) => {
         if(!comment.trim()) return;
@@ -94,6 +139,7 @@ export default function BootsDetails() {
             }
         })
     };
+    
 
     if (!boots) return <Roulette />
 
@@ -116,7 +162,7 @@ export default function BootsDetails() {
                         </div>
                     )}
                     {isAuth && !isOwner && (
-                        <button className="btn delete">Like</button>
+                        <button className={`btn like ${liked ? 'liked' : ''} `} onClick={likeBootsHandler} disabled={sendingLike}>{liked ? 'Unlike' : 'Like'} ({likes.length})</button>
                     )}
                     {!isAuth && (
                         <p><Link to={`/login`} ><span className="linkTo">Login</span></Link> to interact.</p>
@@ -147,7 +193,7 @@ export default function BootsDetails() {
 
                 <form action={formAction} className="comments-form">
                     <textarea {...inputData('comment')} placeholder="Good vibes or nothing.."></textarea>
-                    <button className="btn submit" type="submit" disabled={!user}>Shooot it</button>
+                    <button className="btn submit" type="submit" disabled={!user || sending}>Shooot it</button>
                     <p>(button is dissabled while sending)</p>
                 </form>
             </div>
