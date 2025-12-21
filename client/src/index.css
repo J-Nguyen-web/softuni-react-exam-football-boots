@@ -533,6 +533,14 @@ header nav {
   background: #ff3d00;
   color:#ffffffff;
 }
+.btn.like {
+  background: #06c122ff;
+  color:#ffffffff;
+}
+.btn.like.liked {
+  background: #787878ff;
+  color:#ffffffff;
+}
 
 .comments-section {
   max-width:900px;
