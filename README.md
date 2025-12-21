@@ -68,13 +68,14 @@ src/
 
 ## Setup
 
+```bash
 # Install dependencies
 npm install
 
-# Launch the client
+# Launch client
 npm run dev
 
-# Launch the server
+# Launch server
 node server.js
 
 # Server URL
