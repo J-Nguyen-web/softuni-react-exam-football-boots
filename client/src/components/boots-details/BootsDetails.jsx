@@ -127,8 +127,9 @@ export default function BootsDetails() {
         })
     };
 
-    const deleteCommentHandler = async (commentId) => {
-        if (!isOwner) return;
+    const deleteCommentHandler = async (commentId, ownerId) => {
+
+        if (user?._id !== ownerId) return;
         showConfirm(`Are you sure you want to delete that comment?`, async () => {
             try {
                 await request(`/data/comments/${commentId}`, 'DELETE');
@@ -180,7 +181,7 @@ export default function BootsDetails() {
                             <p className="comment-text"> {comment.message} </p>
                             <div className="comments-action">
                                 {user._id === comment._ownerId ? 
-                                    <button className="btn-delete-comment" onClick={() => deleteCommentHandler(comment._id)}>Delete</button>
+                                    <button className="btn-delete-comment" onClick={() => deleteCommentHandler(comment._id, comment._ownerId)}>Delete</button>
                                 : ''
                                 }
                             </div>
@@ -194,7 +195,7 @@ export default function BootsDetails() {
                 <form action={formAction} className="comments-form">
                     <textarea {...inputData('comment')} placeholder="Good vibes or nothing.."></textarea>
                     <button className="btn submit" type="submit" disabled={!user || sending}>Shooot it</button>
-                    <p>(button is dissabled while sending)</p>
+                    <p>(button is dissabled while sending or empty message)</p>
                 </form>
             </div>
         </section>

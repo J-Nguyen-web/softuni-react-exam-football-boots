@@ -23,7 +23,6 @@ export default function BootsCard({
                     <span className="boots-price">Price: {price.toFixed(2)} $</span>
                 </div>
                 {/* <p className="boot-description">{description}</p> */}
-                <span className="boots-rating">#######</span>
                 <Link to={`details/${_id}`} className="boots-details-btn">Details</Link>
             </div>
         </div>

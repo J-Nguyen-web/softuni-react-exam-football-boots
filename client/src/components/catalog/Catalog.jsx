@@ -11,7 +11,6 @@ export default function Catalog() {
         (async () => {
             try {
                 const result = await request('/data/boots', 'get')
-                console.log('BOOTS    ',result)
                 setArticles(result)
             } catch (error) {
                 alert(error.message)
