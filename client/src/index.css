@@ -94,6 +94,7 @@ header nav {
   padding-left: 60px;
 
   background-image: url('/public/cristiano.jpg');
+   /* todo lamine yamal */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -724,7 +725,14 @@ header nav {
   font-size: 0.95rem;
   transition: all 0.2 ease;
 }
-
+.create-form div {
+  display: flex;
+  flex-direction: column;
+  max-width: 90%;
+}
+.create-form select {
+  border-radius: 11px;
+}
 .create-form textarea {
   resize: vertival;
   min-height: 100px;

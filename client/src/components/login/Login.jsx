@@ -16,7 +16,6 @@ export default function Login() {
   const loginFormHandler = async ({ email, password }) => {
     if (email =='' || password == '') {
       return showModal('Email and password are required!', "error")
-      // TODO MODAL
     }
 
     try {
@@ -24,7 +23,7 @@ export default function Login() {
       showModal(`Welcome ${email}`, "succes")
 
       navigate('/')
-    } catch (error) { // todo forbiden msg
+    } catch (error) { 
 
       showModal(
         <span>Wrong email or password! <br />

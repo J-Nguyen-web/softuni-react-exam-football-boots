@@ -9,22 +9,20 @@ import { useState } from "react";
 
 export default function BootsCreate() {
     const navigate = useNavigate();
-    const {showModal} = useModal()
+    const { showModal } = useModal()
     const { request } = useReq();
     const [sending, setSending] = useState(false);
 
     const createBootsHandler = async (values) => {
 
-        // data.like = Number(data.rating) // todo like
-
         try {
-            if(sending) return; // guard against double submit create
+            if (sending) return; // guard against double submit create
             setSending(true);
 
             await request('/data/boots', 'POST', {
                 ...values,
                 price: Number(values.price)
-        });
+            });
             showModal("Football boots created succesfully! ", "info")
             navigate('/boots')
         } catch (error) {
@@ -45,7 +43,7 @@ export default function BootsCreate() {
         price: '',
         image: '',
         description: '',
-    },validateBoots);
+    }, validateBoots);
 
     const inputClass = (field) =>
         `form-input ${errors[field] && touched[field] ? "input-error" : ""}`
@@ -66,21 +64,31 @@ export default function BootsCreate() {
                     <input type="text" id="title" {...inputData('title')} className={inputClass("title")} />
                     {errorText("title")}
 
-                    <label htmlFor="type">Terrain:</label>
-                    <input type="text" id="type" {...inputData('type')} className={inputClass("type")} />
-                   {errorText("type")}
+                    <div className="createTerrain">
+                        <label htmlFor="type">Terrain:</label>
+                        {/*<input type="text" id="type" {...inputData('type')} className={inputClass("type")} />
+                   {errorText("type")} */}
+                        <select id="type" {...inputData('type')} className={inputClass("type")}>
+                            <option value="ag">AG - artificial ground</option>
+                            <option value="fg">FG - firm ground</option>
+                            <option value="mg">MG - multi-ground</option>
+                            <option value="sg">SG - soft ground</option>
+                            <option value="tf">TF - turf</option>
+                            <option value="ic-in">IC/IN - indoor</option>
+                        </select>
+                    </div>
 
                     <label htmlFor="price">Price:</label>
                     <input type="number" step="0.01" id="price" {...inputData('price')} className={inputClass("price")} />
-                   {errorText("price")}
+                    {errorText("price")}
 
                     <label htmlFor="image">Image URL:</label>
                     <input type="url" id="image" {...inputData('image')} className={inputClass("image")} />
-                   {errorText("image")}
+                    {errorText("image")}
 
                     <label htmlFor="description">Description:</label>
                     <textarea type="text" id="description" {...inputData('description')} className={inputClass("description")} />
-                   {errorText("description")}
+                    {errorText("description")}
 
                     <button type="submit" className="btn-submit" >Place it </button>
                 </div>
