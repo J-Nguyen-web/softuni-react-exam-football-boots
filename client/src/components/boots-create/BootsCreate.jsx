@@ -69,6 +69,7 @@ export default function BootsCreate() {
                         {/*<input type="text" id="type" {...inputData('type')} className={inputClass("type")} />
                    {errorText("type")} */}
                         <select id="type" {...inputData('type')} className={inputClass("type")}>
+                            <option value="" disabled>Choose terrain type..</option>
                             <option value="ag">AG - artificial ground</option>
                             <option value="fg">FG - firm ground</option>
                             <option value="mg">MG - multi-ground</option>
