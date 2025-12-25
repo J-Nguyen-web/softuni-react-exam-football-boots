@@ -36,7 +36,6 @@ export default function useReq(initialUrl = null, initialState = []) {
         }
         
         const response = await fetch(`${baseUrl}${endpoint}`, options);
-        console.log(`${baseUrl}${endpoint}`, options)
 
         if (!response.ok) {
             let error;
