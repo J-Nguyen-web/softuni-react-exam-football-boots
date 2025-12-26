@@ -10,6 +10,7 @@ import Catalog from './components/catalog/Catalog.jsx'
 import BootsEdit from './components/boots-edit/BootsEdit.jsx'
 import BootsDetails from './components/boots-details/BootsDetails.jsx'
 import ProtectedRoute from './components/ProtectedRoutes.jsx'
+import Terrains from './components/terrains/Terrains.jsx'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path='/' element={< Home />} />
           <Route path='/boots' element={< Catalog />} />
           <Route path='/boots/details/:bootsId' element={< BootsDetails />} />
+          <Route path='/terrains' element={< Terrains />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path='/boots/create' element={< BootsCreate />} />

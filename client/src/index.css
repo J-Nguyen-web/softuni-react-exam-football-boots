@@ -1,3 +1,7 @@
+html {
+  scroll-behaviour: smooth;
+}
+
 /* -------- HEADER -------- */
 header {
   position: sticky;
@@ -293,6 +297,11 @@ header nav {
   }
 }
 
+.home-top3boots {
+  width: 200px;
+  height: 200px;
+  gap: 20px;
+}
 
 /* -------- BOOTS CARD -------- */
 .boots-card {
@@ -303,7 +312,7 @@ header nav {
   overflow: hidden;
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
   transition: transform 0.35s ease, box-shadow 0.35s ease;
-  width: 340px;
+  max-width: 340px;
   
 }
 
@@ -315,10 +324,10 @@ header nav {
 
 .boots-image {
   position: relative;
-  height: 220px;
+  max-height: 220px;
   background: linear-gradient(180deg, #fddb3a, #00c853, #1e88e5);
   overflow: hidden;
-  padding: 6px;
+  padding: 0.35rem;
   align-items: center;
   justify-content: center;
   display: flex;
@@ -331,7 +340,7 @@ header nav {
   object-fit: contain;
   border-radius: 11px;
   transition: transform 0.4s ease;
-  padding: 6px;
+  padding: 0.35rem;
   background: #ffffffff;
 }
 
@@ -352,14 +361,15 @@ header nav {
 }
 
 .boots-content {
-  padding: 18px 20px 22px;
+  padding: 1rem 1.25rem 1.25rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
 .boots-name {
-  margin-bottom: 6px;
+  margin-bottom: 0.75rem;
+  margin-top: 0;
   font-size: 1.25rem;
   font-weight: 900;
   letter-spacing: 0.5px;
@@ -369,23 +379,31 @@ header nav {
 .boots-meta {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .boots-terrain {
+  all: unset; /* browser to default */
+  display: inline-flex; /* removes baseline underline of the anchors and links */
+
+  align-items: center;
   background: #00c853;
   color: #ffffffff;
   font-weight:700;
-  padding: 5px 14px;
+  padding: 0.38rem 0.8rem;
   border-radius: 20px;
   font-size: 0.75rem;
 }
 
-.boots-rating {
+.boots-terrain {
+  text-decoration: none; /* re-enable link behaviour explicitly */
+}
+
+.boots-likes {
   display: inline-block;
   color: #ffd600;
-  font-size: 0.9rem;
-  margin-bottom: 9px;
+  font-size: 0.8rem;
+  margin-bottom: 0.8rem;
   font-weight: 700;
 }
 
@@ -403,7 +421,7 @@ header nav {
 .boots-details-btn {
   display:block;
   text-align: center;
-  padding: 8px;
+  padding: 0.50rem;
   border-radius: 30px;
   font-weight: 700;
   text-transform: uppercase;
@@ -986,4 +1004,146 @@ header nav {
   border-radius: 6px;
   background-color: rgba(255, 255, 255, 0.5);
   margin-top: 3px;
+}
+
+/* -------- TERRAIN PAGE -------- */
+
+.title-info {
+  max-width: 900px;
+  margin: 10px auto 100px;
+  padding: 0 20px;
+
+  font-size: 1.15rem;
+  line-height: 1.9;
+  border-radius: 16px;
+  font-weight: 600;
+  background-color: rgba(172, 172, 172, 0.25);
+  color: #ffffff;
+
+  text-shadow: 0 2px 8px rgba(0,0,0,0.55);
+}
+
+.title-info h2 {
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 18px;
+  color: #e9f41bff;
+  /* text-shadow: 0 3px 11px rgba(255, 255, 255, 0.6); */
+}
+
+.title-info p {
+  font-size: 1.15rem;
+  line-height: 1.9;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.55);
+}
+
+.terrain-nav {
+  position: sticky;
+  top: 60px;
+  z-index:900;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 20px;
+
+  box-shadow: 0 6px 20px rgba(0,0,0,0.50);
+}
+
+.terrain-nav a {
+  color: #fff;
+  font-weight: 900;
+  text-decoration: none;
+  background: rgba(3, 172, 11, 0.85);
+  padding: 6px 14px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 6px #ffd600;
+}
+
+.terrain-nav a:hover {
+  background: rgba(40, 52, 184, 0.85);
+  transform: scale(1:1);
+}
+
+.to-top {
+  margin-left: auto;
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: none;
+  background: #ffcc00ff;
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.terrain-page {
+  min-height:100vh;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 35%,
+    rgba(0, 0, 0, 1) 100%
+  ),
+  url("/public/stadium-grass.jpg");
+  background-size: contain;
+  background-position: top center;
+  background-repeat: no-repeat;
+}
+
+.terrain-container {
+  max-width: 900px;
+  margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 0 20px;
+}
+
+.terrain-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px;
+  scroll-margin-top: 30vh; /* centered on the screen when Link to href#id */
+
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+
+  box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+  border-left: 6px solid #0e8f07ff;
+  animation: fadeUp 0.6s ease both;
+}
+
+.terrain-card:target {
+  box-shadow: 0 0 0 6px #ffd600;
+  animation: pulse 1.2s ease-out;
+}
+@keyframes pulse {
+  0% {box-shadow: 0 0 0 0 #ffd600;}
+  100% {box-shadow: 0 0 0 6px transparent;}
+}
+
+.terrain-card h2 {
+  margin-bottom: 11px;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #1e88e5;
+}
+
+.terrain-card p {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  color: #333;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
