@@ -6,9 +6,20 @@ export default function BootsCard({
     type,
     price,
     image,
-    description,
 
 }) {
+
+    const TERRAIN_TYPE = {
+            AG:"Artificial Grass - 3G/4G synthetic turf",
+            FG:"Firm Ground - natural gras, dry or sligthly damp",
+            HG:"Hard Ground - short, robust studs, durability",
+            MG:"Multi-Ground - multiple surface",
+            SG:"Soft Ground - natural grass, muddy",
+            TF:"Turf - hard ground, old artificial turf",
+            IN:"Indoor - futsal, indoor terrain",
+            
+    }
+
     return (
         <div className="boots-card">
             <div className="boots-image">
@@ -19,7 +30,7 @@ export default function BootsCard({
             <div className="boots-content">
                 <h3 className="boots-name">{title}</h3>
                 <div className="boots-meta">
-                    <span className="boots-terrain">Terrain type: {type}</span>
+                    <Link to={`/terrains#${type}`}><span className="boots-terrain" title={TERRAIN_TYPE[type]}>Terrain type: {type}</span></Link>
                     <span className="boots-price">Price: {price.toFixed(2)} $</span>
                 </div>
                 {/* <p className="boot-description">{description}</p> */}

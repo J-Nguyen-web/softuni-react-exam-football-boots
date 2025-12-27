@@ -9,6 +9,7 @@ export default function Header() {
                 
                 <Link className="home-logo" to="/"><img src="/public/ball-logo.png" alt="logo" /></Link>
                 <div className="nav-group">
+                <Link to="/terrains" className="nav-link">Terrain types</Link>
                 <Link to="/boots" className="nav-link">Catalog</Link>
                 {isAuth
                     ? (

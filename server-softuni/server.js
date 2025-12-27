@@ -1370,7 +1370,7 @@
             "78ef80fc-f30b-4eb3-bc7f-eeabb00f0f10": {
                 _ownerId: "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
                 title: "Puma Ibero V Futsal Shoes",
-                type: "IC",
+                type: "IN",
                 price: 84.99,
                 image: "https://www.futbolemotion.com/imagesarticulos/265175/750/zapatilla-puma-ibero-v-azul-0.webp",
                 description: "The Puma Ibero V Futsal shoe is a lightweight, agile indoor boot designed for quick moves, featuring a cushioned PROFOAM LITE midsole for comfort and a sticky PUMAGRIP rubber outsole for excellent traction on hard courts. Key features include a wrapped tongue for a snug fit, synthetic upper for durability, and recycled materials in its construction, making it ideal for indoor soccer or futsal players who need agility and control. ",
