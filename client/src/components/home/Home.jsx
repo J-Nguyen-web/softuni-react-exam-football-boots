@@ -24,7 +24,6 @@ export default function Home() {
 
                 const likesCount = likes.reduce((boots, likes) => {
                     boots[likes.bootsId] = (boots[likes.bootsId] || 0) + 1;
-                    console.log(boots)
                     return boots
                 }, {});
 
@@ -37,7 +36,6 @@ export default function Home() {
                 if (isMounted) setBoots(sortedBoots);
 
             } catch (err) {
-                console.log('on home')
                 showModal(parseServerError(err), "error");
             } finally {
                 if (isMounted) setLoading(false);

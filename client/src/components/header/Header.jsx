@@ -1,13 +1,29 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../../context/UserContext.jsx";
+import { useState } from "react";
 
 export default function Header() {
     const {user, isAuth } = useUserContext();
+    const [query, setQuery] = useState();
+    const navigate = useNavigate();
+
+    const onSearch = (formData) => {
+        const search = formData.get('search');
+
+        if(!search) return;
+        
+        navigate(`/boots?search=${encodeURIComponent(search)}`)
+    }
     return (
         <header className="nav Link home">
             <nav>
                 
                 <Link className="home-logo" to="/"><img src="/public/ball-logo.png" alt="logo" /></Link>
+                <form action={onSearch}>
+                    <label htmlFor="search">Search</label>
+                    <input type="text" id="search" name="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search boots and terrain types.." />
+                </form>
+                
                 <div className="nav-group">
                 <Link to="/terrains" className="nav-link">Terrain types</Link>
                 <Link to="/boots" className="nav-link">Catalog</Link>
