@@ -9,6 +9,7 @@ import { parseServerError } from "../../util/errorHandler.js";
 import { useEffect } from "react";
 
 export default function BootsDetails() {
+    
     const { user, isAuth } = useUserContext();
     const { showModal, showConfirm } = useModal();
     const { bootsId } = useParams();
