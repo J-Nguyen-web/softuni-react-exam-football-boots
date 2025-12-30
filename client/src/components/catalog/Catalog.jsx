@@ -4,6 +4,7 @@ import useReq from "../../hooks/useReq.js";
 import Roulette from "../Roulette.jsx";
 import { useSearchParams } from "react-router-dom";
 import { useModal } from "../../context/ModalContext.jsx";
+import { arrayWords } from "../../util/arrayWords.js";
 
 export default function Catalog() {
 
@@ -30,7 +31,6 @@ export default function Catalog() {
     
     useEffect(() => {
         (async () => {
-            console.log(search)
             try {
             //`/data/boots?where=${encodeURIComponent(`title LIKE "%${search}%"`)}` нужен encode заради символите
             // ако има search url да е равен на този string (тук се задава специфичния за API server link за достъпване)
@@ -42,7 +42,20 @@ export default function Catalog() {
             //? allBoots.filter( boots =>  ако има стойност на search,  
             //    boots.title.toLowerCase().includes(search.toLowerCase()) || да се извърши проверка дали се съдържа в title
             //    boots.type.toLowerCase().includes(search.toLowerCase()) и type (проверява за цялостно съответствие)
-            ? allBoots.filter( boots => matchingSearch(boots, search) // подаване на array от boots и search от ключови думи
+            
+            //? allBoots.filter( boots => matchingSearch(boots, search)  подаване на array от boots и search от ключови думи
+
+            ? allBoots.filter( boots => {
+                const searchText = arrayWords(search); // всички думи се слагат в array
+
+                const titleWords = arrayWords(boots.title); // цялото заглавие се слага в array
+                const terrainWords = boots.type?.toUpperCase(); // terrain type се прави на главни букви
+
+                return searchText.some( words => // за всяка дума от написаните в търсенето а
+                    titleWords.includes(words) || // се проверяват в масива от думите на title-a на boots
+                     terrainWords === words.toUpperCase() // и за абсолютно еднакво съвпадение за типа на терана
+                )
+            }
             )
             : allBoots // ако няма search, да се върне result без промени (всичките налични boots)
             
