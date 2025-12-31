@@ -16,13 +16,27 @@ export default function Header() {
     }
     return (
         <header className="nav Link home">
-            <nav>
-                
-                <Link className="home-logo" to="/"><img src="/public/ball-logo.png" alt="logo" /></Link>
-                <form action={onSearch}>
-                    <label htmlFor="search">Search</label>
-                    <input id="search" name="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search boots and terrain types.." />
-                </form>
+
+            <nav className="nav-inner">                
+                <Link className="home-logo" to="/">
+                    <span className="ball-wrapper">
+                        <img src="/public/classic.png" alt="logo" />
+                    </span>
+                    <p className="nav-link">Home</p>
+                </Link>
+
+                <div className="search-wrapper">
+                    <form action={onSearch} className="search-form">
+                        <label htmlFor="search">Search</label>
+                        <input
+                            id="search"
+                            name="search"
+                            value={query}
+                            onChange={(event) => setQuery(event.target.value)} 
+                            placeholder="Search boots and terrain types.." 
+                        />
+                    </form>
+                </div>
                 
                 <div className="nav-group">
                 <Link to="/terrains" className="nav-link">Terrain types</Link>
