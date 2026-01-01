@@ -11,6 +11,7 @@ import BootsEdit from './components/boots-edit/BootsEdit.jsx'
 import BootsDetails from './components/boots-details/BootsDetails.jsx'
 import ProtectedRoute from './components/ProtectedRoutes.jsx'
 import Terrains from './components/terrains/Terrains.jsx'
+import Profile from './components/profile/Profile.jsx'
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
           
           <Route path='/register' element={< Register />} />
           <Route path='/login' element={< Login />} />
+          <Route path='/profile' element={< Profile />} />
         </Routes>
       
       <Footer />
