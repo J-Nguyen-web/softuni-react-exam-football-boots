@@ -45,7 +45,7 @@ export default function Header() {
                     ? (
                         <div id="user">
                             <Link to="/boots/create" className="nav-link">Create boots</Link>
-                            <Link to="/profile" className="nav-link">You are logged with {user.email}</Link>
+                            <Link to="/profile" className="nav-link">My profile</Link>
                             <Link to="/logout" className="nav-link">Logout</Link>
                         </div>
                     )
