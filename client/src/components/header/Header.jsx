@@ -26,16 +26,20 @@ export default function Header() {
                 </Link>
 
                 <div className="search-wrapper">
-                    <form action={onSearch} className="search-form">
-                        <label htmlFor="search">Search</label>
-                        <input
-                            id="search"
-                            name="search"
-                            value={query}
-                            onChange={(event) => setQuery(event.target.value)} 
-                            placeholder="Search boots and terrain types.." 
-                        />
-                    </form>
+                    <form className="search-form">
+  <label htmlFor="search">Search</label>
+
+  <div className="input-wrap">
+    <input
+      id="search"
+      name="search"
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+      placeholder="Search boots and terrain types.."
+    />
+    <span className="input-bg" aria-hidden="true"></span>
+  </div>
+</form>
                 </div>
                 
                 <div className="nav-group">
@@ -45,7 +49,7 @@ export default function Header() {
                     ? (
                         <div id="user">
                             <Link to="/boots/create" className="nav-link">Create boots</Link>
-                            <Link to="/profile" className="nav-link">My profile</Link>
+                            <Link to="/profile" className="nav-link">My Profile</Link>
                             <Link to="/logout" className="nav-link">Logout</Link>
                         </div>
                     )
