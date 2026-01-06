@@ -19,7 +19,7 @@ export default function Footer() {
                         <ul>
                             <li><a>Contact Us</a></li>
                             <li><a>Shipping & Returns</a></li>
-                            <li><a>Size Guide</a></li>
+                            <li><Link to={'/size-guide'}>Size Guide</Link></li>
                             <li><a>FAQ</a></li>
                         </ul>
                     

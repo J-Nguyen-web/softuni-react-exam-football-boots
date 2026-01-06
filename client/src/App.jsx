@@ -12,6 +12,7 @@ import BootsDetails from './components/boots-details/BootsDetails.jsx'
 import ProtectedRoute from './components/ProtectedRoutes.jsx'
 import Terrains from './components/terrains/Terrains.jsx'
 import Profile from './components/profile/Profile.jsx'
+import SizeGuide from './components/size-guide/SizeGuide.jsx'
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route path='/boots' element={< Catalog />} />
           <Route path='/boots/details/:bootsId' element={< BootsDetails />} />
           <Route path='/terrains' element={< Terrains />} />
+          <Route path='/size-guide' element={< SizeGuide />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path='/boots/create' element={< BootsCreate />} />
