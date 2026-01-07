@@ -26,9 +26,28 @@ export default function SizeGuide() {
                                 <th>EU</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            {sizes.map((row, i) => (
+                                <tr key={i}>
+                                    <td>row.cm</td>
+                                    <td>row.uk</td>
+                                    <td>row.us</td>
+                                    <td>row.eu</td>
+                                </tr>
+                            ))}
+                        </tbody>
                     </table>
                 </div>
+                
+                <div className="size-guide-tips">
+                    <h3>Pro Fit Tips</h3>
+                    <ul>
+                        <li>Always measure feet in the evening.</li>
+                        <li>Boots should feel snug, not painful.</li>
+                        <li>If between sizes, consider foot width & position.</li>
+                    </ul>
+                </div>
             </div>
-        </section>
+        </section>  
     );
 }

@@ -365,7 +365,7 @@ header.nav {
   padding: 60px 40px 80px;
   min-height: 100vh;
   background:
-  radial-gradient(circle at top, rgba(255, 214, 0, 0.25), transparant 40%),
+  radial-gradient(circle at top, rgba(255, 214, 0, 0.25), transparent 40%),
   linear-gradient(180deg, #f8efefff, #ffffff);
 }
 
@@ -554,7 +554,7 @@ header.nav {
   background: #ffffffff;
   border-radius: 22px;
   box-shadow: 0 14px 35px rgba(0,0,0,0.18);
-  overflo4: hidden;
+  overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
@@ -1260,3 +1260,92 @@ header.nav {
   object-fit: cover;
 }
 
+.size-guide-page {
+  min-height: 100vh;
+  padding: 80px 20px;
+  background:
+  radial-gradient(circle at top, rgba(255,215,0,0.25), transparent 40%),
+  linear-gradient(180deg, #ffffffff);
+}
+
+.size-guide-card {
+  max-width: 900px;
+  margin: auto;
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 36px;
+  box-shadow: 0 14px 35px rgba(0,0,0,0.18);
+  animation: fadeUp 0.6 ease both;
+}
+
+.size-guide-title {
+  text-align: center;
+  font-size: 2.6rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #1b87e4ff;
+  text-shadow: 0 0 10px rgba(255,214,0,0.6);
+  margin-bottom: 11px;
+}
+
+.size-giude-subtitle {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 30px;
+  color: #2b2929ff;
+}
+
+.size-guide-table-wrapper {
+  overflow-x: auto;
+}
+
+.size-guide-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.size-guide-table thead {
+  background: linear-gradient(135deg, #fddb3a, #00c853, #1e88e5);
+  color: #ffffffff;
+}
+
+.size-guide-table th,
+.size-guide-table td {
+  padding: 14px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.size-guide-table tbody tr {
+  background: #ffffffff;
+  transition: background 0.3s ease, transform 0.3 ease;
+}
+
+.size-guide-table tbody tr:nth-child(even) {
+  background: #ffffffff;
+}
+
+.size-guide-table tbody tr:hover {
+  background: rgba(255,214,0,0.25);
+  transform: scale(1.01);
+}
+
+.size-guide-tips {
+  margin-top: 32px;
+  padding: 22px;
+  border-radius: 18px;
+  background: linear-gradient(45deg, #00c853, #ffd600);
+  color: #ffffffff;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+.size-guide-tips h3 {
+  font-size: 1.4rem;
+  font-weight: 900;
+  margin-bottom: 11px;
+  text-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
+
+.size-guide-tips ul{}
