@@ -1,26 +1,27 @@
 export default function SizeGuide() {
     const sizes = [
-        {cm: "", UK: "", US: "", EU: ""},
-        {cm: "", UK: "", US: "", EU: ""},
-        {cm: "", UK: "", US: "", EU: ""},
-        {cm: "", UK: "", US: "", EU: ""},
-        {cm: "", UK: "", US: "", EU: ""},
-        {cm: "", UK: "", US: "", EU: ""},
-        {cm: "", UK: "", US: "", EU: ""},
-        {cm: "", UK: "", US: "", EU: ""},
-        {cm: "", UK: "", US: "", EU: ""},
-        
-    ]
+        {cm: "24", UK: "6", US: "7", EU: "40"},
+        {cm: "24", UK: "6.5", US: "7.5", EU: "40.5"},
+        {cm: "25", UK: "7", US: "8", EU: "41"},
+        {cm: "25", UK: "7.5", US: "8.5", EU: "42"},
+        {cm: "26", UK: "8", US: "9", EU: "42.5"},
+        {cm: "26", UK: "8.5", US: "9.5", EU: "43"},
+        {cm: "27", UK: "9", US: "10", EU: "44"},
+        {cm: "27", UK: "9.5", US: "10.5", EU: "44.5"},
+        {cm: "28", UK: "10", US: "11", EU: "45"},
+    ];
+
     return (
         <section className="size-guide-page">
             <div className="sizeguide-card">
                 <h1 className="size-guide-title">Football Boots Size Guide</h1>
                 <p className="size-guide-subtitle">Measure your foot length and find the perfect fit for match day.</p>
+                
                 <div className="size-guide-table-wrapper">
                     <table className="size-guide-table">
                         <thead>
                             <tr>
-                                <th>Foot (cm)</th>
+                                <th>FООТ (cm)</th>
                                 <th>UK</th>
                                 <th>US</th>
                                 <th>EU</th>
@@ -29,10 +30,10 @@ export default function SizeGuide() {
                         <tbody>
                             {sizes.map((row, i) => (
                                 <tr key={i}>
-                                    <td>row.cm</td>
-                                    <td>row.uk</td>
-                                    <td>row.us</td>
-                                    <td>row.eu</td>
+                                    <td>{row.cm}</td>
+                                    <td>{row.UK}</td>
+                                    <td>{row.US}</td>
+                                    <td>{row.EU}</td>
                                 </tr>
                             ))}
                         </tbody>

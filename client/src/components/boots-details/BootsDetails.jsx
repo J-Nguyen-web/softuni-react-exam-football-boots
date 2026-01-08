@@ -7,6 +7,7 @@ import Roulette from "../Roulette.jsx";
 import useForm from "../../hooks/useForm.js";
 import { parseServerError } from "../../util/errorHandler.js";
 import { useEffect } from "react";
+import TERRAIN_TYPE from "../../util/terrainType.js";
 
 export default function BootsDetails() {
     
@@ -152,7 +153,9 @@ export default function BootsDetails() {
                 <div className="details-content">
                     <h2 className="details-title">{boots?.title || 'Loading...'}</h2>
                     <div className="details-meta">
-                        <span className="details-terrain">Terrain type: {boots?.type || '-'}</span>
+                        <Link to={`/terrains#${boots?.type}`} target="_blank">
+                            <span className="details-terrain"  title={TERRAIN_TYPE[boots?.type]}>Terrain type: {boots?.type || '-'}</span>
+                        </Link>
                         <span className="details-price">{boots?.price != null && !isNaN(Number(boots.price)) ? Number(boots.price).toFixed(2) : '0.00'} $</span>
                     </div>
                     <p className="details-description">{boots?.description || '-'}</p>
