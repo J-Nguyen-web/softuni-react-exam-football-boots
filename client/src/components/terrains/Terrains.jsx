@@ -14,14 +14,14 @@ export default function Terrains() {
     return (
         <div className="terrain-page">
             <nav className="terrain-nav">
-                <a href="#ag">AG</a>
-                <a href="#fg">FG</a>
-                <a href="#hg">HG</a>
-                <a href="#mg">MG</a>
-                <a href="#sg">SG</a>
-                <a href="#tf">TF</a>
-                <a href="#indoor">IN/IC</a>
-                <a href="#fg-ag">FG/AG</a>
+                <a href="#AG">AG</a>
+                <a href="#FG">FG</a>
+                <a href="#HG">HG</a>
+                <a href="#MG">MG</a>
+                <a href="#SG">SG</a>
+                <a href="#TF">TF</a>
+                <a href="#IN">IN/IC</a>
+                <a href="#FG-AG">FG/AG</a>
                 <a href="#top" className="to-top"> Top</a>
             </nav>
             <div id="top"></div>
