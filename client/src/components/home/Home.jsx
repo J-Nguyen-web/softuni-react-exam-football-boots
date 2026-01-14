@@ -55,12 +55,13 @@ export default function Home() {
 
     return (
         <div className="home-page">
+            <div className="home-banner"></div>
             <div className="home-text">
-                <h1>Welcome to </h1>
+                <h1>Welcome to Jogo Bonita Store</h1>
                 <p>Discover the latest football boots with ratings, comments, and more.</p>
             </div>
             <section className="home-top3boots">
-                <h1>Top 3</h1>
+                <h1>Top 3 liked boots</h1>
                 {boots.length === 0 && <h3>No boots uploaded</h3>}
                 <div className="top3boots">
                     {boots.map(bootsResult => (<BootsCard key={bootsResult._id} {...bootsResult} />))}

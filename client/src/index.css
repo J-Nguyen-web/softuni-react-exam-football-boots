@@ -1,3 +1,4 @@
+
 html {
   scroll-behavior: smooth;
 }
@@ -189,10 +190,15 @@ header.nav {
 /* -------- HOME PAGE -------- */
 .home-page {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  min-height: 100vh;  
+}
+
+.home-banner {
   min-height: 100vh;
-  padding-left: 60px;
+  min-width: 100vw;
 
   background-image: url('/public/messi-giveawa.webp');
    /* todo lamine yamal */
@@ -204,20 +210,25 @@ header.nav {
 
 .home-text {
   max-width: 400px;
-  background-color: rgba(255, 255, 255, 0.15);
+  width: 25vw;
+  background-color: rgba(253, 236, 0, 0.25);
+  color: #fff;
   padding: 20px;
   border-radius: 14px;
-  position: relative;
-  top: -200px;
+  position: absolute;
+  top: 300px;
+  left: -0px;
 }
 
 .home-text h1 {
   font-size: 3rem;
+
   margin-bottom: 16px;
 }
 
 .home-text p {
   font-size: 1.2rem;
+
   line-height: 1.5;
 }
 
@@ -395,9 +406,16 @@ header.nav {
 }
 
 .home-top3boots {
-  width: 200px;
-  height: 200px;
+  display: flex;
+  flex-direction: column;
+  top: 700px;
+  
+}
+
+.top3boots {width: 100%;
   gap: 20px;
+  display: flex;
+  flex-direction: row;
 }
 
 /* -------- BOOTS CARD -------- */
@@ -412,7 +430,6 @@ header.nav {
   max-width: 340px;
   
 }
-
 
 .boots-card:hover {
   transform:translateY(-6px) scale(1.02);
