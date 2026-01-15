@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap');
+
+:root {
+  font-family: 'DynaPuff', cursive;
+  font-weight: 400;
+  letter-spacing: 1px;
+
+}
 
 html {
   scroll-behavior: smooth;
@@ -369,7 +377,7 @@ header.nav {
   padding: 60px 40px 80px;
   min-height: 100vh;
   background:
-  radial-gradient(circle at top, rgba(255, 214, 0, 0.25), transparent 40%),
+  radial-gradient(circle at top, rgba(255, 214, 0, 0.55), transparent 40%),
   linear-gradient(180deg, #f8efefff, #ffffff);
 }
 
@@ -408,14 +416,25 @@ header.nav {
 .home-top3boots {
   display: flex;
   flex-direction: column;
+  width: 100vw;
   top: 700px;
-  
+  color: #3ed211;
+  background:
+  radial-gradient(circle at top, rgba(255, 214, 0, 0.55), transparent 40%),
+  linear-gradient(180deg, #f8efefff, #ffffff);
+}
+
+.home-top3boots h1 {
+  margin: auto;
+  padding: 1rem;
 }
 
 .top3boots {width: 100%;
   gap: 20px;
   display: flex;
   flex-direction: row;
+  padding-bottom: 1rem;
+  justify-content: center;
 }
 
 /* -------- BOOTS CARD -------- */
@@ -507,6 +526,7 @@ header.nav {
   padding: 0.38rem 0.8rem;
   border-radius: 20px;
   font-size: 0.75rem;
+  letter-spacing: 1px;
 }
 
 .boots-terrain {

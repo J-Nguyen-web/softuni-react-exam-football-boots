@@ -7,6 +7,7 @@ export default function BootsCard({
     type,
     price,
     image,
+    likes,
 
 }) {
 
@@ -23,7 +24,7 @@ export default function BootsCard({
                     <Link to={`/terrains#${type}`} target="_blank"><span className="boots-terrain" title={TERRAIN_TYPE[type]}>Terrain type: {type}</span></Link>
                     <span className="boots-price">Price: {price.toFixed(2)} $</span>
                 </div>
-                {/* <p className="boot-description">{description}</p> */}
+                <div className="boots-likes">Likes: {likes} </div>
                 <Link to={`details/${_id}`} className="boots-details-btn">Details</Link>
             </div>
         </div>
