@@ -36,7 +36,6 @@ export default function Catalog() {
             // ако има search url да е равен на този string (тук се задава специфичния за API server link за достъпване)
             // LIKE % % - за частично съвпадение при търсене (зависи от server-а дали поддържа това свойство)
             const likes = await request('/data/likes', 'get');
-            console.log(likes)
             
             const allBoots = await request('/data/boots', 'get');
 
@@ -61,6 +60,7 @@ export default function Catalog() {
             )
             : allBoots // ако няма search, да се върне result без промени (всичките налични boots)
             
+            // merge likes with the filtered boots
                 const bootsWithLikes = filteredResult.map(boots => ({
                     ...boots,
                     likes: likes.filter(like => like.bootsId === boots._id).length
