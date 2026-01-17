@@ -22,16 +22,18 @@ export default function Profile() {
 
         (async () => {
             try {
-                const [ createdBoots, likes, comments ] = await Promise.all([
+                const [ createdBoots, likes, allLikes, comments ] = await Promise.all([
                     request(`/data/boots?where=${encodeURIComponent(`_ownerId="${user._id}"`)}`),
                     request(`/data/likes?where=${encodeURIComponent(`userId="${user._id}"`)}`),
+                    request(`/data/likes`),
                     request(`/data/comments?where=${encodeURIComponent(`_ownerId="${user._id}"`)}`),
                 ]);
 
                 if(!mounted) return;
+                
                 const createdBootsWithLikes = createdBoots.map(boots => ({
                     ...boots,
-                    likes: likes.filter(like => like.bootsId === boots._id).length
+                    likes: allLikes.filter(like => like.bootsId === boots._id).length
                 }))
                 setCreatedBoots(createdBootsWithLikes);
                 setComments(comments);
@@ -41,16 +43,21 @@ export default function Profile() {
                     likedBootsIds.map(id => request(`/data/boots/${id}`))
                 );
 
-                setLikedBoots(liked);
+                const likedBootsWithLikes = liked.map( likedShoes => ({
+                    ...likedShoes,
+                    likes: allLikes.filter(like => like.bootsId === likedShoes._id).length
+                }))
+
+                setLikedBoots(likedBootsWithLikes);
                 setLoading(false);
                 
-                console.log(boots)
+                console.log(createdBoots)
                 console.log(likes)
                 console.log(comments)
                 
             } catch (error) {
                 alert('error')
-                showModal(error)
+                showModal(error.message)
                 setLoading(false);
             }
         })(); 

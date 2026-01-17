@@ -8,7 +8,7 @@ import { arrayWords } from "../../util/arrayWords.js";
 
 export default function Catalog() {
 
-    const {showModal} = useModal
+    const {showModal} = useModal();
     const { request } = useReq();
     const [articles, setArticles] = useState(null);
     const [searchParams] = useSearchParams();

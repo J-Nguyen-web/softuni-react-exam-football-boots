@@ -62,7 +62,7 @@ export default function Home() {
             </div>
             <section className="home-top3boots">
                 <h1>Top 3 liked boots</h1>
-                {boots.length === 0 && <h3>No boots uploaded</h3>}
+                {boots.length === 0 && <h3 className="top3boots">No boots uploaded</h3>}
                 <div className="top3boots">
                     {boots.map(bootsResult => (<BootsCard key={bootsResult._id} {...bootsResult} />))}
                 </div>
