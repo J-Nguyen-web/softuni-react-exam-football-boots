@@ -7,11 +7,10 @@ import Roulette from "../Roulette.jsx";
 
 export default function Profile() {
 
-    const {user, isAuth } = useUserContext();
+    const {user} = useUserContext();
 
     const {request} = useReq();
     const {showModal} = useModal();
-
     const [createdBoots, setCreatedBoots] = useState();
     const [likedBoots, setLikedBoots] = useState();
     const [comments, setComments] = useState();
@@ -22,7 +21,12 @@ export default function Profile() {
 
         (async () => {
             try {
-                const [ createdBoots, likes, allLikes, comments ] = await Promise.all([
+                const [
+                    createdBoots,
+                    userLikes,
+                    allLikes,
+                    comments,
+                ] = await Promise.all([
                     request(`/data/boots?where=${encodeURIComponent(`_ownerId="${user._id}"`)}`),
                     request(`/data/likes?where=${encodeURIComponent(`userId="${user._id}"`)}`),
                     request(`/data/likes`),
@@ -31,37 +35,36 @@ export default function Profile() {
 
                 if(!mounted) return;
                 
-                const createdBootsWithLikes = createdBoots.map(boots => ({
-                    ...boots,
-                    likes: allLikes.filter(like => like.bootsId === boots._id).length
-                }))
-                setCreatedBoots(createdBootsWithLikes);
-                setComments(comments);
+                // likes count map
+                const likesCount = allLikes.reduce((acc, likes) => {
+                    acc[likes.bootsId] = (acc[likes.bootsId] || 0) +1;
+                    return acc;
+                }, {});
+                
+                // attach likes helper
+                const withLikes = boots =>
+                    boots.map(pairBoots => ({
+                        ...pairBoots,
+                        likes: likesCount[pairBoots._id] || 0
+                    }));
 
-                const likedBootsIds = likes.map( like => like.bootsId);
-                const liked = await Promise.all(
-                    likedBootsIds.map(id => request(`/data/boots/${id}`))
+                const likedBoots = await Promise.all(
+                    (userLikes.map( like => like.bootsId)).map(id => request(`/data/boots/${id}`))
                 );
 
-                const likedBootsWithLikes = liked.map( likedShoes => ({
-                    ...likedShoes,
-                    likes: allLikes.filter(like => like.bootsId === likedShoes._id).length
-                }))
-
-                setLikedBoots(likedBootsWithLikes);
+                setLikedBoots(withLikes(likedBoots));
+                setCreatedBoots(withLikes(createdBoots));
+                setComments(comments);
                 setLoading(false);
-                
-                console.log(createdBoots)
-                console.log(likes)
-                console.log(comments)
+
+                console.log('e',likedBoots)
+
                 
             } catch (error) {
-                alert('error')
-                showModal(error.message)
+                showModal(error.message || 'Something went wrong')
                 setLoading(false);
             }
         })(); 
-
         return ()=> (mounted = false)
     }, []);
     
@@ -80,20 +83,31 @@ export default function Profile() {
             <section className="profile-section">
                 <h3>Created Boots</h3>
                 <div className="profile-grid">
-                    {createdBoots.map(boots => (
+                {!createdBoots ? (
+                    <p>No liked boots yet.</p>
+                    ) : (
+                    createdBoots.map(boots => (
                         <BootsCard key={boots?._id} {...boots} />
-                    ))}
+                    ))
+                    )
+                }
+                    
                 </div>
             </section>
             
             <section className="profile-section">
                 <h3>Liked Boots</h3>
-                {likedBoots.length === 0 && <p>No liked boots yet.</p>}
-                <div className="profile-grid">
-                    {likedBoots.map( boots => (
-                        <BootsCard key={boots?._id} {...boots} />
-                    ))}
-                </div>
+                {!likedBoots || likedBoots.length === 0 ? (
+                    <p>No liked boots yet.</p>
+                    ) : (
+                    <div className="profile-grid">
+                        {likedBoots.map( boots => (
+                            <BootsCard key={boots?._id} {...boots} />
+                            )
+                        )}
+                    </div>
+                )
+                }
             </section>
 
             <section className="profile-section">
@@ -103,8 +117,8 @@ export default function Profile() {
                 ) : (
                     <ul className="profile-comments">
                         {comments.map((comment) => (
-                        <li key={comments?._id}>
-                            <strong>{comments.bootTitle}: {comments.text}</strong>
+                        <li key={comment?._id}>
+                            <strong>{comment.bootTitle}: {comment.text}</strong>
                         </li>  
                         ))}
                     </ul>
