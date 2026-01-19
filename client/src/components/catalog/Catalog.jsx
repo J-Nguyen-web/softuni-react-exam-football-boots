@@ -5,6 +5,7 @@ import Roulette from "../Roulette.jsx";
 import { useSearchParams } from "react-router-dom";
 import { useModal } from "../../context/ModalContext.jsx";
 import { arrayWords } from "../../util/arrayWords.js";
+import { attachLikes } from "../../util/attachLikes.js";
 
 export default function Catalog() {
 
@@ -60,12 +61,8 @@ export default function Catalog() {
             )
             : allBoots // ако няма search, да се върне result без промени (всичките налични boots)
             
-            // merge likes with the filtered boots
-                const bootsWithLikes = filteredResult.map(boots => ({
-                    ...boots,
-                    likes: likes.filter(like => like.bootsId === boots._id).length
-                }))
-                setArticles(bootsWithLikes)
+            // merge likes with the filtered boots using attachLikes
+            setArticles(attachLikes(filteredResult, likes));
             } catch (error) {
                 showModal(error.message)
             }

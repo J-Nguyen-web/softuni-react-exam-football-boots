@@ -13,7 +13,6 @@ export default function Register() {
 
     const registerFormHandler = async (values) => {
         const { email, password, rePassword } = values;
-console.log('email')
         if (!email || !password ) {
             
              showModal('Email and password are required!', "error");
@@ -21,7 +20,6 @@ console.log('email')
         }
 
         if (password !== rePassword ) {
-            console.log('password')
              showModal('Password missmatch!', "error")
              return;
         }

@@ -4,6 +4,7 @@ import { parseServerError } from "../../util/errorHandler.js";
 import Roulette from "../Roulette.jsx";
 import BootsCard from "../bootsCard/BootsCard.jsx";
 import useReq from "../../hooks/useReq.js";
+import { attachLikes } from "../../util/attachLikes.js";
 
 export default function Home() {
 
@@ -17,20 +18,14 @@ export default function Home() {
 
         async function mostLikedBoots(limit = 3) {
             try {
-                const [boots, likes] = await Promise.all([
+                const [bootsData, likesData] = await Promise.all([
                     request(`/data/boots`),
                     request(`/data/likes`),
                 ]);
 
-                const likesCount = likes.reduce((boots, likes) => {
-                    boots[likes.bootsId] = (boots[likes.bootsId] || 0) + 1;
-                    return boots
-                }, {});
-
-                const sortedBoots = boots
-                    .map(boots => ({ ...boots, likes: likesCount[boots._id] || 0 }))
-                    .sort((a, b) => b.likes - a.likes)
-                    .slice(0, limit);
+                const sortedBoots = attachLikes(bootsData, likesData) // attachLikes merge Boots with Likes
+                    .sort((a, b) => b.likes - a.likes) // then sort it by Likes
+                    .slice(0, limit); // then slice it by the limit we put
 
 
                 if (isMounted) setBoots(sortedBoots);

@@ -25,7 +25,7 @@ export default function BootsCard({
                     <span className="boots-price">Price: {price.toFixed(2)} $</span>
                 </div>
                 <div className="boots-likes">Likes: {likes} </div>
-                <Link to={`details/${_id}`} className="boots-details-btn">Details</Link>
+                <Link to={`/boots/details/${_id}`} className="boots-details-btn">Details</Link>
             </div>
         </div>
     );
