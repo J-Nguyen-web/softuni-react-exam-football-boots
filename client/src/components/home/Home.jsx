@@ -16,6 +16,7 @@ export default function Home() {
     useEffect(() => {
         let isMounted = true;
 
+        // TODO USER ABLE TO CHANGE THE LIMIT OF SHOWN ARTICLES
         async function mostLikedBoots(limit = 3) {
             try {
                 const [bootsData, likesData] = await Promise.all([

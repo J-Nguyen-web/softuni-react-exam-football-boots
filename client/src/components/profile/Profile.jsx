@@ -5,6 +5,7 @@ import BootsCard from "../bootsCard/BootsCard.jsx";
 import { useModal } from "../../context/ModalContext.jsx";
 import Roulette from "../Roulette.jsx";
 import { attachLikes } from "../../util/attachLikes.js";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
 
@@ -35,6 +36,22 @@ export default function Profile() {
                 ]);
 
                 if(!mounted) return;
+                
+                const commentedBootsId = [...new Set(commentsData.map(comment => comment.bootsId))];
+
+                const commentedBoots = await Promise.all(
+                    commentedBootsId.map( id => request(`/data/boots/${id}`))
+                );
+
+                const bootsMap = commentedBoots.reduce((acc, bootsPair) => {
+                    acc[bootsPair._id] = bootsPair;
+                    return acc;
+                }, {});
+
+                const commentsWithTitles = commentsData.map( comment => ({
+                    ...comment,
+                    bootsTitle: bootsMap[comment.bootsId]?.title ?? 'Deleted boots'
+                }))
 
                 const likedBootsByUser = await Promise.all(
                     (userLikes.map(like => like.bootsId)).map(id => request(`/data/boots/${id}`))
@@ -42,9 +59,9 @@ export default function Profile() {
 
                 setLikedBoots(attachLikes(likedBootsByUser, likesData));
                 setCreatedBoots(attachLikes(createdBootsData, likesData));
-                setComments(commentsData);
+                setComments(commentsWithTitles); //TODO COMMENTS WITH LINK AND TITLE OF THE BOOTS
                 setLoading(false);
-                console.log('e',commentsData)
+                console.log('e',commentsWithTitles)
                 
             } catch (error) {
                 showModal(error.message || 'Something went wrong')
@@ -104,7 +121,7 @@ export default function Profile() {
                     <ul className="profile-comments">
                         {comments.map((comment) => (
                         <li key={comment?._id}>
-                            <strong>{comment.bootTitle}: {comment.message}</strong>
+                            <Link to={`/boots/details/${comment.bootsId}`}><strong>{comment.bootsTitle} :</strong></Link> {comment.message}
                         </li>  
                         ))}
                     </ul>
