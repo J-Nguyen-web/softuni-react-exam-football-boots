@@ -37,8 +37,10 @@ export default function Profile() {
 
                 if(!mounted) return;
                 
+                // Set doesnt allow duplicates, so we get only one record of each id
                 const commentedBootsId = [...new Set(commentsData.map(comment => comment.bootsId))];
 
+                // taking only one record of ID allows to make only fetch for that id boots without making fecth for the same id twice (less request faster service )
                 const commentedBoots = await Promise.all(
                     commentedBootsId.map( id => request(`/data/boots/${id}`))
                 );
@@ -118,13 +120,20 @@ export default function Profile() {
                 {!comments || comments.length === 0 ? (
                     <p>No comments yet.</p>
                 ) : (
-                    <ul className="profile-comments">
+                    <div className="profile-comments">
                         {comments.map((comment) => (
-                        <li key={comment?._id}>
-                            <Link to={`/boots/details/${comment.bootsId}`}><strong>{comment.bootsTitle} :</strong></Link> {comment.message}
-                        </li>  
+                        <div className="profile-comment" key={comment?._id}>
+                            <Link to={`/boots/details/${comment.bootsId}`}>
+                                <div className="profile-comment-title" title={comment.bootsTitle}>
+                                    <strong>{comment.bootsTitle}</strong>
+                                </div>
+                                <div className="profile-comment-text">
+                                    {comment.message}
+                                </div>
+                            </Link> 
+                        </div>  
                         ))}
-                    </ul>
+                    </div>
                 )}
             </section>
 
