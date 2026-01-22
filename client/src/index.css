@@ -499,7 +499,7 @@ header.nav {
   flex-direction: column;
   flex-grow: 1;
 }
-
+/* todo ellipsis */
 .boots-name {
   margin-bottom: 0.75rem;
   margin-top: 0;
