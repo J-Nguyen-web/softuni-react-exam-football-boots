@@ -10,26 +10,30 @@ export default function Home() {
 
     const { showModal } = useModal();
     const { request } = useReq();
-    const [boots, setBoots] = useState([]);
+    const [likedBoots, setLikedBoots] = useState([]);
+    const [newestBoots, setnewesetBoots] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         let isMounted = true;
 
         // TODO USER ABLE TO CHANGE THE LIMIT OF SHOWN ARTICLES
-        async function mostLikedBoots(limit = 3) {
+        async function sortingBoots(likeLimit = 3, newestLimit = 3) {
             try {
                 const [bootsData, likesData] = await Promise.all([
                     request(`/data/boots`),
                     request(`/data/likes`),
                 ]);
 
-                const sortedBoots = attachLikes(bootsData, likesData) // attachLikes merge Boots with Likes
+                const sortByLikes = attachLikes(bootsData, likesData) // attachLikes merge Boots with Likes
                     .sort((a, b) => b.likes - a.likes) // then sort it by Likes
-                    .slice(0, limit); // then slice it by the limit we put
+                    .slice(0, likeLimit); // then slice it by the limit we put
+                const sortByCreationOn = attachLikes(bootsData, likesData) 
+                    .sort((a, b) => b._createdOn - a._createdOn) // then sort it by Likes
+                    .slice(0, newestLimit); // then slice it by the limit we put    
 
-
-                if (isMounted) setBoots(sortedBoots);
+                if (isMounted) setLikedBoots(sortByLikes);
+                if (isMounted) setnewesetBoots(sortByCreationOn);
 
             } catch (err) {
                 showModal(parseServerError(err), "error");
@@ -37,8 +41,7 @@ export default function Home() {
                 if (isMounted) setLoading(false);
             }
         }
-
-        mostLikedBoots();
+        sortingBoots();
 
         return () => {
             isMounted = false;
@@ -58,9 +61,16 @@ export default function Home() {
             </div>
             <section className="home-top3boots">
                 <h1>Top 3 liked boots</h1>
-                {boots.length === 0 && <h3 className="top3boots">No boots uploaded</h3>}
+                {likedBoots.length === 0 && <h3 className="top3boots">No boots uploaded</h3>}
                 <div className="top3boots">
-                    {boots.map(bootsResult => (<BootsCard key={bootsResult._id} {...bootsResult} />))}
+                    {likedBoots.map(bootsResult => (<BootsCard key={bootsResult._id} {...bootsResult} />))}
+                </div>
+            </section>
+            <section className="home-newestBoots">
+                <h1>Newest Boots</h1>
+                {newestBoots.length === 0 && <h3 className="top3boots">No boots uploaded</h3>}
+                <div className="top3boots">
+                    {newestBoots.map(bootsResult => (<BootsCard key={bootsResult._id} {...bootsResult} />))}
                 </div>
             </section>
         </div>

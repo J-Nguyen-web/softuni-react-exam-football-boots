@@ -61,9 +61,8 @@ export default function Profile() {
 
                 setLikedBoots(attachLikes(likedBootsByUser, likesData));
                 setCreatedBoots(attachLikes(createdBootsData, likesData));
-                setComments(commentsWithTitles); //TODO COMMENTS WITH LINK AND TITLE OF THE BOOTS
+                setComments(commentsWithTitles);
                 setLoading(false);
-                console.log('e',commentsWithTitles)
                 
             } catch (error) {
                 showModal(error.message || 'Something went wrong')
