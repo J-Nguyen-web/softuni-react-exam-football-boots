@@ -19,7 +19,7 @@ export default function BootsCard({
             </div>
             
             <div className="boots-content">
-                <h3 className="boots-name">{title}</h3>
+                <h3 className="boots-name" title={title}>{title}</h3>
                 <div className="boots-meta">
                     <Link to={`/terrains#${type}`} target="_blank"><span className="boots-terrain" title={TERRAIN_TYPE[type]}>Terrain type: {type}</span></Link>
                     <span className="boots-price">Price: {price.toFixed(2)} $</span>

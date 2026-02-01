@@ -447,6 +447,10 @@ header.nav {
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
   transition: transform 0.35s ease, box-shadow 0.35s ease;
   max-width: 340px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   
 }
 
@@ -507,6 +511,10 @@ header.nav {
   font-weight: 900;
   letter-spacing: 0.5px;
   color: #1e88e5;
+
+    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .boots-meta {
