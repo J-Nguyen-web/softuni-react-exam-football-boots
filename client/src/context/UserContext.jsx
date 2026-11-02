@@ -1,60 +1,72 @@
-import { createContext, useContext, useState } from "react";
-import useReq from "../hooks/useReq.js";
-import usePersistedState from "../hooks/usePersistedState.js";
-import { Navigate } from "react-router-dom";
+import {
+    createContext,
+    useContext,
+    useEffect,
+    useState,
+    useCallback,
+} from 'react';
+import { supabase } from '../supabaseClient.js';
 
 const UserContext = createContext({
+    user: null,
     isAuth: false,
-    user: {
-        email: '',
-        password: '',
-        _createdOn: '',
-        _id: '',
-        accessToken: '',
-    },
+    authLoading: true,
     registerHandler() {},
-    loginHandler(){},
-    logoutHandler(){},
+    loginHandler() {},
+    logoutHandler() {},
 });
 
-export function UserProvider({children}) {
-    const [user, setUser] = usePersistedState(null,'user')
-    const { request } = useReq();
+export function UserProvider({ children}) {
+    const [user, setUser] = useState(null);
+    const [authLoading, setAuthLoading] = useState(true);
 
-    const registerHandler = async (email,password) => {
+    useEffect(() => {
+        const {
+            data: { subscription }
+        } = supabase.auth.onAuthStateChange((_event, session) => {
+            setUser(session?.user ?? null);
+            setAuthLoading(false);
+        });
 
-        const result = await request('/users/register', 'POST',  { email, password })
-        setUser(result);
-        return result;
-        
-    };
+        return () => subscription.unsubscribe();
+    },[]);
 
-    const loginHandler = async (email,password) => {
-        const result = await request('/users/login', 'POST', {email,password})
+    const registerHandler = async (email, password) => {
+        const { data, error } = await supabase.auth.signUp({
+            email,
+            password,
+        });
 
-        setUser(result);
+        if (error) throw error;
+
+        return data;
+    }
+    
+    const loginHandler = async (email, password) => {
+        const { data, error } = await supabase.authsignInWithPassword({
+            email,
+            password,
+        });
+
+        if(error) throw error;
+
+        return data;
     }
 
-    const logoutHandler = () => {
-        return request('/users/logout', 'GET', null, { 
-            accessToken: user?.accessToken,
-        })
-        .then(() => Navigate('/'))
-        .catch( err => {
-            if(err.status === 403){
-                alert('Logout failed!');
-                console.error(err)
-            }
-        })
-        .finally(() => setUser(null))
-    };
+    // logout needs callback защото се пресъздава при всеки render на UserProvider-a
+    const logoutHandler = useCallback(async () => {
+        const { error } = await supabase.auth.signOut();
+
+        if (error) throw error;
+    },[]);
 
     const UserContextValues = {
         user,
-        isAuth: !!user?.accessToken,
+        isAuth: !!user,
+        authLoading,
         registerHandler,
         loginHandler,
-        logoutHandler
+        logoutHandler,
     };
 
     return (
@@ -65,9 +77,76 @@ export function UserProvider({children}) {
 }
 
 export function useUserContext() {
-    const contextData = useContext(UserContext)
-
-    return contextData;
+    return useContext(UserContext);
 }
 
 export default UserContext;
+
+// const UserContext = createContext({
+//     isAuth: false,
+//     user: {
+//         email: '',
+//         password: '',
+//         _createdOn: '',
+//         _id: '',
+//         accessToken: '',
+//     },
+//     registerHandler() {},
+//     loginHandler(){},
+//     logoutHandler(){},
+// });
+
+// export function UserProvider({children}) {
+//     const [user, setUser] = usePersistedState(null,'user')
+//     const { request } = useReq();
+
+//     const registerHandler = async (email,password) => {
+
+//         const result = await request('/users/register', 'POST',  { email, password })
+//         setUser(result);
+//         return result;
+        
+//     };
+
+//     const loginHandler = async (email,password) => {
+//         const result = await request('/users/login', 'POST', {email,password})
+
+//         setUser(result);
+//     }
+
+//     const logoutHandler = () => {
+//         return request('/users/logout', 'GET', null, { 
+//             accessToken: user?.accessToken,
+//         })
+//         .then(() => Navigate('/'))
+//         .catch( err => {
+//             if(err.status === 403){
+//                 alert('Logout failed!');
+//                 console.error(err)
+//             }
+//         })
+//         .finally(() => setUser(null))
+//     };
+
+//     const UserContextValues = {
+//         user,
+//         isAuth: !!user?.accessToken,
+//         registerHandler,
+//         loginHandler,
+//         logoutHandler
+//     };
+
+//     return (
+//         <UserContext.Provider value={UserContextValues}>
+//             {children}
+//         </UserContext.Provider>
+//     )
+// }
+
+// export function useUserContext() {
+//     const contextData = useContext(UserContext)
+
+//     return contextData;
+// }
+
+// export default UserContext;
