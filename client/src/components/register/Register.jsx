@@ -25,11 +25,27 @@ export default function Register() {
         }
 
         try {
-            const user = await registerHandler(email, password);
+            await registerHandler(email, password);
             navigate('/')
         } catch (err) {
             showModal(err.message);
         }
+
+        // if confirmation is ON for supabase
+        // try {
+        //     const result = await registerHandler(email, password)
+
+        //     if(!result.session){
+        //         showModal(
+        //             'Registration succesful! Please check your email and confirm your account before logging in.'
+        //         );
+        //         return;
+        //     }
+
+        //     navigate('/')
+        // } catch (error) {
+        //     showModal(error.message, 'error')
+        // }
     }
 
     const {
@@ -67,7 +83,7 @@ export default function Register() {
                     <input type="password" id="re-password" {...inputData('rePassword')}/>
                     
                     <input type="submit" className="btn-register" value="Register"/>
-                    <p>Already in the club? Put your boots and <Link to={`/login`} ><span className="linkTo">go to play</span></Link>.</p>
+                    <p>Already in the club? Put your boots and <Link to={`/login`} ><span className="linkTo">LOGIN</span></Link> to play.</p>
 
                 </div>
             </form>
