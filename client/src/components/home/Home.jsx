@@ -3,13 +3,14 @@ import { useModal } from "../../context/ModalContext.jsx";
 import { parseServerError } from "../../util/errorHandler.js";
 import Roulette from "../Roulette.jsx";
 import BootsCard from "../bootsCard/BootsCard.jsx";
-import useReq from "../../hooks/useReq.js";
+// import useReq from "../../hooks/useReq.js";
 import { attachLikes } from "../../util/attachLikes.js";
+import { supabase } from '../../supabaseClient.js'
 
 export default function Home() {
 
     const { showModal } = useModal();
-    const { request } = useReq();
+    // const { request } = useReq();
     const [likedBoots, setLikedBoots] = useState([]);
     const [newestBoots, setnewesetBoots] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -20,16 +21,28 @@ export default function Home() {
         // TODO USER ABLE TO CHANGE THE LIMIT OF SHOWN ARTICLES
         async function sortingBoots(likeLimit = 3, newestLimit = 3) {
             try {
-                const [bootsData, likesData] = await Promise.all([
-                    request(`/data/boots`),
-                    request(`/data/likes`),
+                const [bootsResult, likesResult] = await Promise.all([
+                    // request(`/data/boots`),
+                    // request(`/data/likes`),
+                    supabase
+                        .from('boots')
+                        .select('id, title, type, price, image, description, created_at'),
+                    supabase
+                        .from('likes')
+                        .select('boots_id'),                    
                 ]);
 
-                const sortByLikes = attachLikes(bootsData, likesData) // attachLikes merge Boots with Likes
+                if(bootsResult.error) throw bootsResult.error
+                if(likesResult.error) throw likesResult.error
+
+                const bootsData = bootsResult.data
+                const likesData = likesResult.data
+
+                const sortByLikes = attachLikes(bootsData, likesData, 'id', 'boots_id') // attachLikes merge Boots with Likes
                     .sort((a, b) => b.likes - a.likes) // then sort it by Likes
                     .slice(0, likeLimit); // then slice it by the limit we put
-                const sortByCreationOn = attachLikes(bootsData, likesData) 
-                    .sort((a, b) => b._createdOn - a._createdOn) // then sort it by Likes
+                const sortByCreationOn = attachLikes(bootsData, likesData, 'id', 'boots_id') 
+                    .sort((a, b) => new Date(b.created_at)  - new Date(a.created_at)) // then sort it by Likes
                     .slice(0, newestLimit); // then slice it by the limit we put    
 
                 if (isMounted) setLikedBoots(sortByLikes);
