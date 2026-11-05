@@ -13,6 +13,7 @@ import ProtectedRoute from './components/ProtectedRoutes.jsx'
 import Terrains from './components/terrains/Terrains.jsx'
 import Profile from './components/profile/Profile.jsx'
 import SizeGuide from './components/size-guide/SizeGuide.jsx'
+import GuestRoute from './components/GuestRoutes.jsx'
 
 function App() {
 
@@ -21,21 +22,25 @@ function App() {
       <Header />
 
         <Routes >
-          <Route path='/' element={< Home />} />
-          <Route path='/boots' element={< Catalog />} />
-          <Route path='/boots/details/:bootsId' element={< BootsDetails />} />
-          <Route path='/terrains' element={< Terrains />} />
-          <Route path='/size-guide' element={< SizeGuide />} />
+            <Route path='/' element={< Home />} />
+            <Route path='/boots' element={< Catalog />} />
+            <Route path='/boots/details/:bootsId' element={< BootsDetails />} />
+            <Route path='/terrains' element={< Terrains />} />
+            <Route path='/size-guide' element={< SizeGuide />} />
 
-          <Route element={<ProtectedRoute />}>
-            <Route path='/boots/create' element={< BootsCreate />} />
-            <Route path='/boots/edit/:bootsId' element={< BootsEdit />} />
+            <Route element={<ProtectedRoute />}>
+                <Route path='/boots/create' element={< BootsCreate />} />
+                <Route path='/boots/edit/:bootsId' element={< BootsEdit />} />
+                <Route path='/profile' element={< Profile />} />
+            </Route>
+
+            <Route element={GuestRoute}>
+                <Route path='/register' element={< Register />} />
+                <Route path='/login' element={< Login />} />
+            </Route>
+
             <Route path='/logout' element={< Logout />} />
-          </Route>
-          
-          <Route path='/register' element={< Register />} />
-          <Route path='/login' element={< Login />} />
-          <Route path='/profile' element={< Profile />} />
+
         </Routes>
       
       <Footer />
