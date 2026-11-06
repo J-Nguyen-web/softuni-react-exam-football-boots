@@ -1,17 +1,20 @@
-import { useNavigate } from "react-router-dom";
 // import useForm from "../../hooks/useForm.js";
+// import useReq from "../../hooks/useReq.js";
 import useForm from "../../hooks/useFormValidate.js";
-import useReq from "../../hooks/useReq.js";
+import { useNavigate } from "react-router-dom";
 import { parseServerError } from "../../util/errorHandler.js";
 import { useModal } from "../../context/ModalContext.jsx";
 import { validateBoots } from "../../validators/validateBoots.js";
 import { useState } from "react";
+import { supabase } from "../../supabaseClient.js";
+import { useUserContext } from "../../context/UserContext.jsx";
 
 export default function BootsCreate() {
+    // const { request } = useReq();
     const navigate = useNavigate();
     const { showModal } = useModal()
-    const { request } = useReq();
     const [sending, setSending] = useState(false);
+    const { user } = useUserContext();
 
     const createBootsHandler = async (values) => {
 
@@ -19,10 +22,19 @@ export default function BootsCreate() {
             if (sending) return; // guard against double submit create
             setSending(true);
 
-            await request('/data/boots', 'POST', {
-                ...values,
-                price: Number(values.price)
-            });
+            // await request('/data/boots', 'POST', {
+            //     ...values,
+            //     price: Number(values.price)
+            // });
+            const { error } = await supabase
+                .from('boots')
+                .insert({
+                    ...values,
+                    price: Number(values.price),
+                    user_id: user.id
+                })
+            
+                if (error) throw error;
             showModal("Football boots created succesfully! ", "info")
             navigate('/boots')
         } catch (error) {

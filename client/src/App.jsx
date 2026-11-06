@@ -34,7 +34,7 @@ function App() {
                 <Route path='/profile' element={< Profile />} />
             </Route>
 
-            <Route element={GuestRoute}>
+            <Route element={<GuestRoute />}>
                 <Route path='/register' element={< Register />} />
                 <Route path='/login' element={< Login />} />
             </Route>
