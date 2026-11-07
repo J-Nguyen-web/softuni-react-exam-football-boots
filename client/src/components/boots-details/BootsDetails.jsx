@@ -1,27 +1,66 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useUserContext } from "../../context/UserContext.jsx";
 import { useState } from "react";
-import useReq from "../../hooks/useReq.js";
+// import useReq from "../../hooks/useReq.js";
 import { useModal } from "../../context/ModalContext.jsx";
 import Roulette from "../Roulette.jsx";
 import useForm from "../../hooks/useForm.js";
 import { parseServerError } from "../../util/errorHandler.js";
 import { useEffect } from "react";
 import TERRAIN_TYPE from "../../util/terrainType.js";
+import { supabase } from "../../supabaseClient.js";
 
 export default function BootsDetails() {
     
     const { user, isAuth } = useUserContext();
     const { showModal, showConfirm } = useModal();
     const { bootsId } = useParams();
+
     const [refresh, setRefresh] = useState(false);
     const [sending, setSending] = useState();
     const [sendingLike, setSendingLike] = useState();
-    const navigate = useNavigate();
+    const [boots, setBoots] = useState(null);
+    const [likes, setLikes] = useState([]);
+    const [comments, setComments] = useState([]);
     
-    const { data: boots, request } = useReq(`/data/boots/${bootsId}`, null)
+    const navigate = useNavigate();
 
-    const isOwner = user?._id === boots?._ownerId;
+    useEffect(() => {
+        async function fetchDetails() {
+            try {
+                const [bootsResult, likesResult, commentsResult] = await Promise.all ([
+                    supabase
+                        .from('boots')
+                        .select('*')
+                        .eq('id', bootsId) // equal - връща специфичен резултат
+                        .single(),      // return single object вместо array
+                    supabase
+                        .from('likes')
+                        .select('*')
+                        .eq('boots_id', bootsId), // prevent fecth на likes and comments на други чифт бутонки
+                    supabase
+                        .from('comments')
+                        .select('*')
+                        .eq('boots_id', bootsId)
+                ])
+                if(bootsResult.error) throw bootsResult.error
+                if(likesResult.error) throw likesResult.error
+                if(commentsResult.error) throw commentsResult.error
+
+                setBoots(bootsResult.data)
+                setLikes(likesResult.data)
+                setComments(commentsResult.data)                
+            } catch (error) {
+                showModal(error.message, 'error')
+            }
+        }
+        fetchDetails();
+        
+    },[bootsId, refresh])
+    
+    // const { data: boots, request } = useReq(`/data/boots/${bootsId}`, null)
+
+    const isOwner = user?.id === boots?.user_id;
 
 
     const urlParams = new URLSearchParams({
@@ -30,28 +69,10 @@ export default function BootsDetails() {
     });
 
     const commentsUrl = `/data/comments?${urlParams.toString()}`;
-    const {data: comments =[], request: fetchComments} = useReq(commentsUrl, []);
-
-    const likeUrl = `/data/likes?where=${encodeURIComponent(`bootsId="${bootsId}"`)}`;
-    const { data: likes = [], request: fetchLikes, refresh: refreshLikes} = useReq(likeUrl, []);
-    const [liked, setLiked] = useState(false);
-    const [likeId, setLikeId] = useState(null);
-
-    useEffect(() => {
-        if(!bootsId || !user) return;
-        const fetchAllLikes = async () => {
-            try {
-                const data = await fetchLikes(likeUrl);
-                const userLike = data.find(like => like.userId === user?._id);
-                setLiked(!!userLike);
-                setLikeId(userLike?._id || null);
-            } catch (error) {
-                console.error("Failed to fetch likes:", error);
-            }
-        };
-
-        if (bootsId) fetchAllLikes();
-    }, [bootsId, user?._id, fetchLikes]);
+    
+    const userLike= likes.find( like => like.user_id === user?.id);
+    const liked = !!userLike
+    const likeId = userLike?.id ?? null;
 
     const likeBootsHandler = async () => {
         if(!isAuth || sendingLike) return;
@@ -59,15 +80,29 @@ export default function BootsDetails() {
             setSendingLike(true);
         try {
             if(liked && likeId){
-                await request(`/data/likes/${likeId}`, 'DELETE');
-                setLiked(false);
-                setLikeId(null);
+                // await request(`/data/likes/${likeId}`, 'DELETE');
+                // setLiked(false);
+                // setLikeId(null);
+               const { error } = await supabase
+                    .from('likes')
+                    .delete()
+                    .eq('id', likeId)
+
+                if (error) throw error;                
             } else {
-                const newLike = await request('/data/likes', 'POST', {bootsId, userId: user._id})
-                setLiked(true);
-                setLikeId(newLike._id);
+                // const newLike = await request('/data/likes', 'POST', {bootsId, userId: user._id})
+                // setLiked(true);
+                // setLikeId(newLike._id);
+               const { error } = await supabase
+                    .from('likes')
+                    .insert({
+                        boots_id: bootsId,
+                        user_id: user.id
+                    });
+
+                if (error) throw error;                   
             }
-            refreshLikes();
+            setRefresh(prev => !prev);
         } catch (error) {
             console.error("Failed to like/unlike", error);
             showModal("Unable to process like action!", "error");
@@ -78,8 +113,8 @@ export default function BootsDetails() {
 
     // refresh comments when refresh changes
     useEffect(() => {
-        fetchComments(commentsUrl, "GET")
-    }, [refresh, commentsUrl, fetchComments])
+        // fetchComments(commentsUrl, "GET")
+    }, [refresh, commentsUrl,])
 
     const submitHandler = async ({ comment }) => {
         if(!comment.trim()) return;
@@ -156,7 +191,7 @@ export default function BootsDetails() {
                         <Link to={`/terrains#${boots?.type}`} target="_blank">
                             <span className="details-terrain"  title={TERRAIN_TYPE[boots?.type]}>Terrain type: {boots?.type || '-'}</span>
                         </Link>
-                        <span className="details-price">{boots?.price != null && !isNaN(Number(boots.price)) ? Number(boots.price).toFixed(2) : '0.00'} $</span>
+                        <span className="details-price">Price: {boots?.price != null && !isNaN(Number(boots.price)) ? Number(boots.price).toFixed(2) : '0.00'} $</span>
                     </div>
                     <p className="details-description">{boots?.description || '-'}</p>
 

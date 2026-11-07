@@ -76,14 +76,14 @@ export default function Home() {
                 <h1>Top 3 liked boots</h1>
                 {likedBoots.length === 0 && <h3 className="top3boots">No boots uploaded</h3>}
                 <div className="top3boots">
-                    {likedBoots.map(bootsResult => (<BootsCard key={bootsResult._id} {...bootsResult} />))}
+                    {likedBoots.map(bootsResult => (<BootsCard key={bootsResult.id} {...bootsResult} />))}
                 </div>
             </section>
             <section className="home-newestBoots">
                 <h1>Newest Boots</h1>
                 {newestBoots.length === 0 && <h3 className="top3boots">No boots uploaded</h3>}
                 <div className="top3boots">
-                    {newestBoots.map(bootsResult => (<BootsCard key={bootsResult._id} {...bootsResult} />))}
+                    {newestBoots.map(bootsResult => (<BootsCard key={bootsResult.id} {...bootsResult} />))}
                 </div>
             </section>
         </div>

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import TERRAIN_TYPE from "../../util/terrainType.js";
 
 export default function BootsCard({
+    id,
     _id,
     title,
     type,
@@ -10,6 +11,8 @@ export default function BootsCard({
     likes,
 
 }) {
+    const bootsId = id ?? _id // ?? - otherwise if no id exist
+    // todo image exist or not - display default image
 
     return (
         <div className="boots-card">
@@ -25,7 +28,7 @@ export default function BootsCard({
                     <span className="boots-price">Price: {price.toFixed(2)} $</span>
                 </div>
                 <div className="boots-likes">Likes: {likes} </div>
-                <Link to={`/boots/details/${_id}`} className="boots-details-btn">Details</Link>
+                <Link to={`/boots/details/${bootsId}`} className="boots-details-btn">Details</Link>
             </div>
         </div>
     );

@@ -589,11 +589,12 @@ header.nav {
   box-shadow: 0 14px 35px rgba(0,0,0,0.18);
   overflow: hidden;
   display: grid;
+  align-items: center;
+  justify-content: center;
   grid-template-columns: 1fr 1fr;
 }
 
 .details-image {
-  position: relative;
   top: 50px;
   width: 340px;
   height: 220px;

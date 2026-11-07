@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import BootsCard from "../bootsCard/BootsCard.jsx";
-import useReq from "../../hooks/useReq.js";
+// import useReq from "../../hooks/useReq.js";
 import Roulette from "../Roulette.jsx";
 import { useSearchParams } from "react-router-dom";
 import { useModal } from "../../context/ModalContext.jsx";
 import { arrayWords } from "../../util/arrayWords.js";
 import { attachLikes } from "../../util/attachLikes.js";
+import { supabase } from "../../supabaseClient.js";
 
 export default function Catalog() {
 
     const {showModal} = useModal();
-    const { request } = useReq();
+    // const { request } = useReq();
     const [articles, setArticles] = useState(null);
     const [searchParams] = useSearchParams();
     const search = searchParams.get('search'); // Ще провери стойността в URL-a search=..
@@ -33,19 +34,22 @@ export default function Catalog() {
     useEffect(() => {
         (async () => {
             try {
-            //`/data/boots?where=${encodeURIComponent(`title LIKE "%${search}%"`)}` нужен encode заради символите
-            // ако има search url да е равен на този string (тук се задава специфичния за API server link за достъпване)
-            // LIKE % % - за частично съвпадение при търсене (зависи от server-а дали поддържа това свойство)
-            const likes = await request('/data/likes', 'get');
+            const [likesResult, bootsResult] = await Promise.all([
+                supabase
+                    .from('likes')
+                    .select('boots_id'),
+
+                supabase
+                    .from('boots')
+                    .select('id, title, type, price, image, description, created_at'),
+            ])
+            if(likesResult.error) throw likesResult.error;
+            if(bootsResult.error) throw bootsResult.error;
             
-            const allBoots = await request('/data/boots', 'get');
+            const likes = likesResult.data;
+            const allBoots = bootsResult.data;
 
             const filteredResult = search
-            //? allBoots.filter( boots =>  ако има стойност на search,  
-            //    boots.title.toLowerCase().includes(search.toLowerCase()) || да се извърши проверка дали се съдържа в title
-            //    boots.type.toLowerCase().includes(search.toLowerCase()) и type (проверява за цялостно съответствие)
-            
-            //? allBoots.filter( boots => matchingSearch(boots, search)  подаване на array от boots и search от ключови думи
 
             ? allBoots.filter( boots => {
                 const searchText = arrayWords(search); // всички думи се слагат в array
@@ -62,7 +66,7 @@ export default function Catalog() {
             : allBoots // ако няма search, да се върне result без промени (всичките налични boots)
             
             // merge likes with the filtered boots using attachLikes
-            setArticles(attachLikes(filteredResult, likes));
+            setArticles(attachLikes(filteredResult, likes, 'id', 'boots_id'));
             } catch (error) {
                 showModal(error.message)
             }
@@ -76,7 +80,7 @@ export default function Catalog() {
             <h1>Catalog</h1>
             {articles.length === 0 && <h3>No boots uploaded</h3>}
             <div className="catalog-container">
-                {articles.map(article => <BootsCard key={article._id} {...article}/>)}
+                {articles.map(article => (<BootsCard key={article.id} {...article}/>))}
             </div>
         </section>
     );
