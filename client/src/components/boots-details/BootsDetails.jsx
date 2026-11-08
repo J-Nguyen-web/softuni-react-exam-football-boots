@@ -117,14 +117,23 @@ export default function BootsDetails() {
     }, [refresh, commentsUrl,])
 
     const submitHandler = async ({ comment }) => {
-        if(!comment.trim()) return;
+        if(!comment.trim() || sending) return;
 
         setSending(true);
+
         try {
-            await request('/data/comments', 'POST', {
-                message: comment,
-                bootsId
-            });
+            // await request('/data/comments', 'POST', {
+            //     message: comment, bootsId });
+            const { error } = await supabase
+                .from('comments')
+                .insert({
+                    message: comment.trim(),
+                    boots_id: bootsId,
+                    user_id: user.id
+                });
+            
+            if (error) throw error;
+
             setRefresh(state => !state);
             setValues({comment: ''})
         } catch (error) {
@@ -166,14 +175,23 @@ export default function BootsDetails() {
 
     const deleteCommentHandler = async (commentId, ownerId) => {
 
-        if (user?._id !== ownerId) return;
+        if (user?.id !== ownerId) return;
         showConfirm(`Are you sure you want to delete that comment?`, async () => {
             try {
-                await request(`/data/comments/${commentId}`, 'DELETE');
-                showModal("Comment deleted succesfully!", "success")
+                // await request(`/data/comments/${commentId}`, 'DELETE');
+                // showModal("Comment deleted succesfully!", "success")
+                // setRefresh(state => !state);
+
+                const { error } = await supabase
+                    .from('comments')
+                    .delete()
+                    .eq('id', commentId)
+                    .eq('user_id', user.id)
+                if(error) throw error;
+                showModal('Comment deleted succesfully!', "succes");
                 setRefresh(state => !state);
             } catch (error) {
-                showModal(parseServerError(error), "error")
+                showModal(parseServerError(error), "error") // error.message?
             }
         })
     };
@@ -215,12 +233,12 @@ export default function BootsDetails() {
                 <h3>Comments</h3>
                 <ul>
                     {comments.map(comment => (
-                        <li key={comment._id} className="comment">
+                        <li key={comment.id} className="comment">
                             <span className="comment-author">{comment.author?.email} :</span>
                             <p className="comment-text"> {comment.message} </p>
                             <div className="comments-action">
-                                {user._id === comment._ownerId ? 
-                                    <button className="btn-delete-comment" onClick={() => deleteCommentHandler(comment._id, comment._ownerId)}>Delete</button>
+                                {user.id === comment.user_id ? 
+                                    <button className="btn-delete-comment" onClick={() => deleteCommentHandler(comment.id, comment.user_id)}>Delete</button>
                                 : ''
                                 }
                             </div>
