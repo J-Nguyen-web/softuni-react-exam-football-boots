@@ -31,10 +31,13 @@ export function UserProvider({ children}) {
         return () => subscription.unsubscribe();
     },[]);
 
-    const registerHandler = async (email, password) => {
+    const registerHandler = async (email, username, password) => {
         const { data, error } = await supabase.auth.signUp({
             email,
             password,
+            options: { // supabase accept it like user.metadata
+                data: { username: username.trim() }
+            }
         });
 
         if (error) throw error;

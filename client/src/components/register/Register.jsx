@@ -12,8 +12,8 @@ export default function Register() {
     const { registerHandler } = useContext(UserContext)
 
     const registerFormHandler = async (values) => {
-        const { email, password, rePassword } = values;
-        if (!email || !password ) {
+        const { email, username, password, rePassword } = values;
+        if (!email || !username || !password ) {
             
              showModal('Email and password are required!', "error");
              return;
@@ -25,10 +25,10 @@ export default function Register() {
         }
 
         try {
-            await registerHandler(email, password);
+            await registerHandler(email, username, password);
             navigate('/')
         } catch (err) {
-            showModal(err.message);
+            showModal(err.message, 'error');
         }
 
         // if confirmation is ON for supabase
@@ -55,6 +55,7 @@ export default function Register() {
         touched,
     } = useForm(registerFormHandler, {
         email: '',
+        username: '',
         password: '',
         rePassword: '',
     }, validateUser);
@@ -75,6 +76,10 @@ export default function Register() {
                     <label htmlFor="register-email">Email:</label>
                     <input type="email" id="register-email" {...inputData('email')} className={inputClass("email")} placeholder="name@gmail.com"/>
                     {errorText("email")}
+
+                    <label htmlFor="register-username">Username:</label>
+                    <input type="text" id="register-username" {...inputData('username')} className={inputClass("username")} placeholder="Displayed name..."/>
+                    {errorText("username")}                    
 
                     <label htmlFor="register-password">Password</label>
                     <input type="password" id="register-password" {...inputData('password')} className={inputClass("password")} />
