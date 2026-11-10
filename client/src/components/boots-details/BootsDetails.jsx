@@ -28,7 +28,7 @@ export default function BootsDetails() {
     useEffect(() => {
         async function fetchDetails() {
             try {
-                const [bootsResult, likesResult, commentsResult] = await Promise.all ([
+                const [bootsResult, likesResult, commentsResult, profilesResult] = await Promise.all ([
                     supabase
                         .from('boots')
                         .select('*')
@@ -41,15 +41,29 @@ export default function BootsDetails() {
                     supabase
                         .from('comments')
                         .select('*')
-                        .eq('boots_id', bootsId)
+                        .eq('boots_id', bootsId),
+                    supabase
+                        .from('profiles')
+                        .select('id, username'),
                 ])
                 if(bootsResult.error) throw bootsResult.error
                 if(likesResult.error) throw likesResult.error
                 if(commentsResult.error) throw commentsResult.error
+                if(profilesResult.error) throw profilesResult.error
+
+                // намиране на username от таблицата profiles в PostgreSQL чрез user.id-то отговарящо на дадения username
+                // по този начин дори username да се смени, ще се отрази и в коментарите, вместо да се запазва username-a по време на post
+                const commentsWithAuthor = commentsResult.data.map( comment => ({
+                    ...comment,
+                    author: profilesResult.data.find(
+                        profile => profile.id === comment.user_id
+                    ) ?? null
+                }));
 
                 setBoots(bootsResult.data)
                 setLikes(likesResult.data)
-                setComments(commentsResult.data)                
+                setComments(commentsWithAuthor)
+
             } catch (error) {
                 showModal(error.message, 'error')
             }
@@ -63,12 +77,12 @@ export default function BootsDetails() {
     const isOwner = user?.id === boots?.user_id;
 
 
-    const urlParams = new URLSearchParams({
-        where: `bootsId="${bootsId}"`,
-        load: 'author=_ownerId:users'
-    });
+    // const urlParams = new URLSearchParams({
+    //     where: `bootsId="${bootsId}"`,
+    //     load: 'author=_ownerId:users'
+    // });
 
-    const commentsUrl = `/data/comments?${urlParams.toString()}`;
+    // const commentsUrl = `/data/comments?${urlParams.toString()}`;
     
     const userLike= likes.find( like => like.user_id === user?.id);
     const liked = !!userLike
@@ -112,9 +126,9 @@ export default function BootsDetails() {
     };
 
     // refresh comments when refresh changes
-    useEffect(() => {
-        // fetchComments(commentsUrl, "GET")
-    }, [refresh, commentsUrl,])
+    // useEffect(() => {
+    //     fetchComments(commentsUrl, "GET")
+    // }, [refresh, commentsUrl,])
 
     const submitHandler = async ({ comment }) => {
         if(!comment.trim() || sending) return;
@@ -234,7 +248,7 @@ export default function BootsDetails() {
                 <ul>
                     {comments.map(comment => (
                         <li key={comment.id} className="comment">
-                            <span className="comment-author">{comment.author?.email} :</span>
+                            <span className="comment-author">{comment.author?.username} :</span>
                             <p className="comment-text"> {comment.message} </p>
                             <div className="comments-action">
                                 {user.id === comment.user_id ? 

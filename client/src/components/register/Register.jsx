@@ -20,7 +20,7 @@ export default function Register() {
         }
 
         if (password !== rePassword ) {
-             showModal('Password missmatch!', "error")
+             showModal('Password do not match!', "error")
              return;
         }
 
