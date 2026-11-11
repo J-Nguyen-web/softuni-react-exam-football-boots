@@ -5,7 +5,7 @@ import UserContext from "../../context/UserContext.jsx";
 import useForm from "../../hooks/useFormValidate.js";
 import { useModal } from "../../context/ModalContext.jsx";
 import { parseServerError } from "../../util/errorHandler.js";
-import { validateUser } from "../../validators/validateUser.js";
+import { validateLogin } from "../../validators/validateLogin.js";
 
 export default function Login() {
 
@@ -20,7 +20,7 @@ export default function Login() {
 
     try {
       await loginHandler(email, password);
-      showModal(`Welcome ${email}`, "succes")
+      showModal(`Welcome ${email}`, "success")
 
       navigate('/')
     } catch (error) { 
@@ -43,7 +43,7 @@ export default function Login() {
   } = useForm(loginFormHandler, {
     email: '',
     password: '',
-  }, validateUser);
+  }, validateLogin);
 
   const inputClass = (field) =>
     `form-input ${errors[field] && touched[field] ? "input-error" : ""}`
