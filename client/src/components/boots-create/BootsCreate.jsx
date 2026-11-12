@@ -1,5 +1,4 @@
 // import useForm from "../../hooks/useForm.js";
-// import useReq from "../../hooks/useReq.js";
 import useForm from "../../hooks/useFormValidate.js";
 import { useNavigate } from "react-router-dom";
 import { parseServerError } from "../../util/errorHandler.js";
@@ -10,7 +9,6 @@ import { supabase } from "../../supabaseClient.js";
 import { useUserContext } from "../../context/UserContext.jsx";
 
 export default function BootsCreate() {
-    // const { request } = useReq();
     const navigate = useNavigate();
     const { showModal } = useModal()
     const [sending, setSending] = useState(false);

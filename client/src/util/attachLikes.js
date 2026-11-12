@@ -8,7 +8,7 @@ export function attachLikes(
     // likes count map
     const likesMap = likesData.reduce((acc, likes) => {
         // acc[likes.bootsId] = (acc[likes.bootsId] || 0) +1;
-        const bootsId = like[likesBootsIdField];
+        const bootsId = likes[likesBootsIdField];
         acc[bootsId] = (acc[bootsId] || 0) + 1;
 
         return acc;

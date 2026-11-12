@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import BootsCard from "../bootsCard/BootsCard.jsx";
-// import useReq from "../../hooks/useReq.js";
 import Roulette from "../Roulette.jsx";
 import { useSearchParams } from "react-router-dom";
 import { useModal } from "../../context/ModalContext.jsx";
@@ -11,7 +10,6 @@ import { supabase } from "../../supabaseClient.js";
 export default function Catalog() {
 
     const {showModal} = useModal();
-    // const { request } = useReq();
     const [articles, setArticles] = useState(null);
     const [searchParams] = useSearchParams();
     const search = searchParams.get('search'); // Ще провери стойността в URL-a search=..

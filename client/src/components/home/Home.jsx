@@ -3,14 +3,12 @@ import { useModal } from "../../context/ModalContext.jsx";
 import { parseServerError } from "../../util/errorHandler.js";
 import Roulette from "../Roulette.jsx";
 import BootsCard from "../bootsCard/BootsCard.jsx";
-// import useReq from "../../hooks/useReq.js";
 import { attachLikes } from "../../util/attachLikes.js";
 import { supabase } from '../../supabaseClient.js'
 
 export default function Home() {
 
     const { showModal } = useModal();
-    // const { request } = useReq();
     const [likedBoots, setLikedBoots] = useState([]);
     const [newestBoots, setnewesetBoots] = useState([]);
     const [loading, setLoading] = useState(true);
