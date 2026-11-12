@@ -1,7 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useUserContext } from "../../context/UserContext.jsx";
 import { useState } from "react";
-// import useReq from "../../hooks/useReq.js";
 import { useModal } from "../../context/ModalContext.jsx";
 import Roulette from "../Roulette.jsx";
 import useForm from "../../hooks/useForm.js";
@@ -169,16 +168,27 @@ export default function BootsDetails() {
         if (!isOwner) return;
         showConfirm(`Are you sure you want to delete that entry?`, async () => {
             try {
-                const bootsUriCode = encodeURIComponent(`bootsId="${bootsId}"`)
-                const comments = await request(
-                    `/data/comments?where=${bootsUriCode}`
-                )
 
-                await Promise.all(
-                    comments.map( comment => request(`/data/comments/${comment._id}`, "DELETE"))
-                )
+                // const bootsUriCode = encodeURIComponent(`bootsId="${bootsId}"`)
+                // const comments = await request(
+                //     `/data/comments?where=${bootsUriCode}`)
+                // await Promise.all(
+                //     comments.map( comment => request(`/data/comments/${comment._id}`, "DELETE")))
+                // await request(`/data/boots/${bootsId}`, 'DELETE');
 
-                await request(`/data/boots/${bootsId}`, 'DELETE');
+                const { data, error } = await supabase
+                    .from('boots')
+                    .delete()
+                    .eq('id', bootsId)
+                    .eq('user_id', user.id)
+                    .select(); // only for verification за изтрития запис
+
+                if (!data.length) {
+                    throw new Error('No boot was deleted. Check ownership or permission.')
+                }
+
+                if(error) throw error;        
+
                 showModal("Boots deleted succesfully!", "success")
                 navigate('/boots');
             } catch (error) {
@@ -201,6 +211,7 @@ export default function BootsDetails() {
                     .delete()
                     .eq('id', commentId)
                     .eq('user_id', user.id)
+
                 if(error) throw error;
                 showModal('Comment deleted succesfully!', "succes");
                 setRefresh(state => !state);
@@ -251,7 +262,7 @@ export default function BootsDetails() {
                             <span className="comment-author">{comment.author?.username} :</span>
                             <p className="comment-text"> {comment.message} </p>
                             <div className="comments-action">
-                                {user.id === comment.user_id ? 
+                                {user?.id === comment.user_id ? 
                                     <button className="btn-delete-comment" onClick={() => deleteCommentHandler(comment.id, comment.user_id)}>Delete</button>
                                 : ''
                                 }
@@ -266,7 +277,7 @@ export default function BootsDetails() {
                 <form action={formAction} className="comments-form">
                     <textarea {...inputData('comment')} placeholder="Good vibes or nothing.."></textarea>
                     <button className="btn submit" type="submit" disabled={!user || sending}>Shooot it</button>
-                    <p>(button is dissabled while sending or empty message)</p>
+                    {/* <p>(button is dissabled while sending or empty message)</p> */}
                 </form>
             </div>
         </section>
