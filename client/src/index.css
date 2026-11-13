@@ -208,7 +208,7 @@ header.nav {
   min-height: 100vh;
   min-width: 100vw;
 
-  background-image: url('/public/messi-giveawa.webp');
+  background-image: url('/messi-giveawa.webp');
    /* todo lamine yamal */
   background-size: cover;
   background-position: center;
@@ -1227,7 +1227,7 @@ header.nav {
     rgba(0, 0, 0, 1) 35%,
     rgba(0, 0, 0, 1) 100%
   ),
-  url("/public/stadium-grass.jpg");
+  url("/stadium-grass.jpg");
   background-size: contain;
   background-position: top center;
   background-repeat: no-repeat;
