@@ -1,24 +1,37 @@
 import { useNavigate, useParams } from "react-router-dom";
-import useReq from "../../hooks/useReq.js";
-// import useForm from "../../hooks/useForm.js";
 import useForm from "../../hooks/useFormValidate.js";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { validateBoots } from "../../validators/validateBoots.js";
 import { useModal } from "../../context/ModalContext.jsx";
 import { parseServerError } from "../../util/errorHandler.js";
+import { supabase } from "../../supabaseClient.js";
+import Roulette from "../Roulette.jsx";
 
 export default function BootsEdit() {
-    const {request} = useReq();
+    const [ loading, setLoading ] = useState(true);
     const {showModal} = useModal();
     const {bootsId} = useParams();
     const navigate = useNavigate();
     
     const editBootsHandler = async  (values) => {
+        
         try {
-            await request(`/data/boots/${bootsId}`, 'PUT', {
-                ...values,
-                price: Number(values.price)
-            });
+            const {error} = await supabase
+                .from('boots')
+                .update({
+                    ...values,
+                    price: Number(values.price)
+                })
+                .eq('id', bootsId)
+                .select();
+                // без .eq supabase ще update всеки запис в таблицата, 
+                // .eq посочва кой точно записа да се Update
+
+                if (error) throw error;
+            // await request(`/data/boots/${bootsId}`, 'PUT', {
+            //     ...values,
+            //     price: Number(values.price)
+            // });
             navigate(`/boots/details/${bootsId}`);
         } catch (error) {
             showModal(parseServerError(error), "error");
@@ -40,13 +53,27 @@ export default function BootsEdit() {
     },validateBoots)
 
     useEffect(() => {
-        request(`/data/boots/${bootsId}`)
-        .then(result => {
-            setValues(result);
-        })
-        .catch(err => {
-            showModal(parseServerError(err))
-        })
+        // request(`/data/boots/${bootsId}`)
+        // .then(result => {setValues(result);}
+        const fetchBoots = async() => {
+            try {
+                const {data, error} = await supabase
+                    .from('boots')
+                    .select('*')
+                    .eq('id', bootsId)
+                    .single();
+                
+                if(error) throw error;
+                setValues(data)
+            }
+            catch(err){
+                showModal(parseServerError(err))
+            } finally {
+                setLoading(false)
+            } 
+        }
+        fetchBoots();
+
     },[bootsId, setValues]);
 
     const inputClass = (field) =>
@@ -60,7 +87,11 @@ export default function BootsEdit() {
     return (
         <section className="edit-boots-page">
             <h1>Edit Boots</h1>
-            <form action={formAction} className="edit-form">
+
+            { loading ? (
+                <Roulette />
+            ) : (
+                <form action={formAction} className="edit-form">
 
                     <label htmlFor="title">Model:</label>
                     <input type="text" id="title" {...inputData('title')} className={inputClass("title")} />
@@ -83,7 +114,8 @@ export default function BootsEdit() {
                    {errorText("description")}
 
                     <button type="submit" className="btn-submit" >Save Changes</button>
-            </form>
+                </form>                
+            )}
         </section>
     );
 }

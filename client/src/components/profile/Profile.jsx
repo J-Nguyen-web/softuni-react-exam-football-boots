@@ -1,80 +1,144 @@
 import { useEffect, useState } from "react";
 import { useUserContext } from "../../context/UserContext.jsx";
-import useReq from "../../hooks/useReq.js";
 import BootsCard from "../bootsCard/BootsCard.jsx";
 import { useModal } from "../../context/ModalContext.jsx";
 import Roulette from "../Roulette.jsx";
 import { attachLikes } from "../../util/attachLikes.js";
 import { Link } from "react-router-dom";
+import { supabase } from "../../supabaseClient.js";
 
 export default function Profile() {
 
     const {user} = useUserContext();
-
-    const {request} = useReq();
     const {showModal} = useModal();
+
     const [createdBoots, setCreatedBoots] = useState([]);
     const [likedBoots, setLikedBoots] = useState([]);
     const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() =>{
+    useEffect(() => {
         let mounted = true;
 
-        (async () => {
+        const fetchProfileData = async () => {
+
+            if(!user?.id) {
+                setLoading(false)
+                return
+            }
+
             try {
                 const [
                     createdBootsData,
-                    commentsData,
                     userLikes,
+                    commentsData,
                     likesData,
                 ] = await Promise.all([
-                    request(`/data/boots?where=${encodeURIComponent(`_ownerId="${user._id}"`)}`),
-                    request(`/data/comments?where=${encodeURIComponent(`_ownerId="${user._id}"`)}`),
-                    request(`/data/likes?where=${encodeURIComponent(`userId="${user._id}"`)}`),
-                    request(`/data/likes`),
+                    // request(`/data/boots?where=${encodeURIComponent(`_ownerId="${user._id}"`)}`),
+                    // request(`/data/comments?where=${encodeURIComponent(`_ownerId="${user._id}"`)}`),
+                    // request(`/data/likes?where=${encodeURIComponent(`userId="${user._id}"`)}`),
+                    // request(`/data/likes`),
+
+                    supabase
+                        .from('boots')
+                        .select('*')
+                        .eq('user_id', user.id), // equal - връща специфичен резултат
+                    supabase
+                        .from('likes')
+                        .select('*')
+                        .eq('user_id', user.id), // prevent fecth на likes and comments на други чифт бутонки
+                    supabase
+                        .from('comments')
+                        .select('*')
+                        .eq('user_id', user.id),
+                    supabase
+                        .from('likes')
+                        .select('*'),
                 ]);
 
-                if(!mounted) return;
+                if(createdBootsData.error) throw createdBootsData.error;
+                if(userLikes.error) throw userLikes.error;
+                if(commentsData.error) throw commentsData.error;
+                if(likesData.error) throw likesData.error;
                 
-                // Set doesnt allow duplicates, so we get only one record of each id
-                const commentedBootsId = [...new Set(commentsData.map(comment => comment.bootsId))];
+                // намиране на likes и comments на определени обувки
+                const relatedBootsId = [
+                    ...new Set([
+                        ...userLikes.data.map(like => like.boots_id),
+                        ...commentsData.data.map(comment => comment.boots_id),
+                    ]),
+                ];
+                
+                const {data: relatedBoots, error: relatedBootsError} = 
+                    relatedBootsId.length
+                        ? await supabase
+                            .from('boots')
+                            .select('*')
+                            .in('id', relatedBootsId) // fetch all related boots в един .in спрямо id колоната
+                        : {data: [], error: null };
 
-                // taking only one record of ID allows to make only fetch for that id boots without making fecth for the same id twice (less request faster service )
-                const commentedBoots = await Promise.all(
-                    commentedBootsId.map( id => request(`/data/boots/${id}`))
-                );
+                    if (relatedBootsError) throw relatedBootsError;
 
-                const bootsMap = commentedBoots.reduce((acc, bootsPair) => {
-                    acc[bootsPair._id] = bootsPair;
-                    return acc;
-                }, {});
+                    // create look up object using boots ID
+                    const bootsMap = relatedBoots.reduce((acc, boot) => {
+                        acc[boot.id] = boot;
+                        return acc;
+                },{});
 
-                const commentsWithTitles = commentsData.map( comment => ({
+                // добавяне на имената на модела към коментарите на потребителя
+                const commentsWithTitles = commentsData.data.map(comment => ({
                     ...comment,
-                    bootsTitle: bootsMap[comment.bootsId]?.title ?? 'Deleted boots'
-                }))
+                    bootsTitle: bootsMap[comment.boots_id]?.title ?? 'Delete boots',
+                }));
 
-                const likedBootsByUser = await Promise.all(
-                    (userLikes.map(like => like.bootsId)).map(id => request(`/data/boots/${id}`))
-                );
+                // boots liked by the user
+                const likedBootsByUser = userLikes.data
+                    .map(like => bootsMap[like.boots_id])
+                    .filter(Boolean);
 
-                setLikedBoots(attachLikes(likedBootsByUser, likesData));
-                setCreatedBoots(attachLikes(createdBootsData, likesData));
+                // всички likes за всяа обувка
+                const likesMap = likesData.data.reduce((acc, like) => {
+                    acc[like.boots_id] = (acc[like.boots_id] || 0) +1;
+                    return acc;
+                },{})
+
+                const addLikeCounts = boots => boots.map(boot => ({
+                    ...boot,
+                    likes: likesMap[boot.id] || 0,
+                }));
+
+                const createdBootsWithLike = addLikeCounts(createdBootsData.data)
+                const likedBootsWithLikes = addLikeCounts(likedBootsByUser)
+
+                if(!mounted) return;
+
+                setCreatedBoots(createdBootsWithLike)
+                setLikedBoots(likedBootsWithLikes)
                 setComments(commentsWithTitles);
-                setLoading(false);
-                
+
             } catch (error) {
-                showModal(error.message || 'Something went wrong')
-                setLoading(false);
+                if (mounted) {
+                    console.error('Failed to load profile:', error);
+                    showModal(error.message, 'error');
+                }
+            } finally {
+                if (mounted) {
+                    setLoading(false);
+                }
             }
-        })(); 
-        return ()=> (mounted = false)
-    }, []);
+        };
+
+            fetchProfileData();
+
+            return () => {
+                mounted = false;
+            }
+        }, [user?.id]);
     
     if(loading){
         return <Roulette />
     }
+    
 
     return (
         <section className="profile-page">
@@ -89,12 +153,11 @@ export default function Profile() {
                 <div className="profile-grid">
                 {!createdBoots || createdBoots.length === 0 ? (
                     <p>No created boots yet.</p>
-                    ) : (
+                ) : (
                     createdBoots.map(boots => (
-                        <BootsCard key={boots?._id} {...boots} />
+                        <BootsCard key={boots?.id} {...boots} />
                     ))
-                    )
-                }
+                )}
                     
                 </div>
             </section>
@@ -103,26 +166,25 @@ export default function Profile() {
                 <h3>Liked Boots</h3>
                 {!likedBoots || likedBoots.length === 0 ? (
                     <p>No liked boots yet.</p>
-                    ) : (
+                ) : (
                     <div className="profile-grid">
                         {likedBoots.map( boots => (
-                            <BootsCard key={boots?._id} {...boots} />
+                            <BootsCard key={boots?.id} {...boots} />
                             )
                         )}
                     </div>
-                )
-                }
+                )}
             </section>
 
             <section className="profile-section">
-                <h3>Comments</h3>
+                <h3>Your Comments</h3>
                 {!comments || comments.length === 0 ? (
                     <p>No comments yet.</p>
                 ) : (
                     <div className="profile-comments">
-                        {comments.map((comment) => (
-                        <div className="profile-comment" key={comment?._id}>
-                            <Link to={`/boots/details/${comment.bootsId}`}>
+                        {comments.map(comment => (
+                        <div className="profile-comment" key={comment?.id}>
+                            <Link to={`/boots/details/${comment.boots_id}`}>
                                 <div className="profile-comment-title" title={comment.bootsTitle}>
                                     <strong>{comment.bootsTitle}</strong>
                                 </div>
@@ -135,7 +197,6 @@ export default function Profile() {
                     </div>
                 )}
             </section>
-
         </section>
     );
 }

@@ -120,7 +120,7 @@ header.nav {
   width: 260px;
   /* background: rgba(255,255,255, 0.95);
   transition: box-shadow 03.s ease, transform 0.3s ease; */
-  background-image: url("public/goalpost.webp");
+  background-image: url("/goalpost.webp");
   background-size: cover;
   background-position: center 70%;
   background-repeat: no-repeat;
@@ -1285,6 +1285,10 @@ header.nav {
   }
 }
 
+.profile-page {
+    padding: 20px;
+}
+
 .profile-grid {
   display: flex;
   flex-wrap: wrap;
@@ -1298,9 +1302,11 @@ header.nav {
   object-fit: cover;
 }
 .profile-comments {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(6,minmax(0, 1fr));
   gap: 14px;
+  width: 100%;
+  box-sizing: border-box;
   margin-bottom: 20px;
 }
 
@@ -1316,7 +1322,8 @@ header.nav {
   flex-direction: column;
   border: solid 1px #000000;
   border-radius:  6px;
-  width: 300px;
+  width: 100%;
+  min-webkit: 0;
   height: 150px;
   overflow: hidden;
   box-shadow: 0 6px   6px rgba(0,0,0,0.18);
