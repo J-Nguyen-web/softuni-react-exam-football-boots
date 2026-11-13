@@ -20,7 +20,7 @@ export default function Header() {
             <nav className="nav-inner">                
                 <Link className="home-logo" to="/">
                     <span className="ball-wrapper">
-                        <img src="/public/classic.png" alt="logo" />
+                        <img src="/classic.png" alt="logo" />
                     </span>
                     <p className="nav-link">Home</p>
                 </Link>
