@@ -1227,8 +1227,8 @@ header.nav {
     rgba(0, 0, 0, 1) 30%,
     rgba(0, 0, 0, 1) 100%
   ),
-  url("/public/stadium-grass.jpg");
-  background-size: contain;
+  url("/stadium-grass.jpg");
+  background-size: 100% auto;
   background-position: top center;
   background-repeat: no-repeat;
 }
