@@ -245,7 +245,7 @@ header.nav {
   max-width: 500px;
   margin: 50px auto;
   padding: 32px;
-  background: url('/public/register.jpg');
+  background: url('/register.jpg');
   background-size: cover;
   border-radius: 20px;
   box-shadow: 0 14px 30px rgba(0,0,0,0.18);
@@ -311,7 +311,7 @@ header.nav {
   max-width: 500px;
   margin: 50px auto;
   padding: 32px;
-  background: url('/public/entrance.jpg');
+  background: url('/entrance.jpg');
   background-size: cover;
   border-radius: 20px;
   box-shadow: 0 14px 30px rgba(0,0,0,0.18);
@@ -775,7 +775,7 @@ header.nav {
   margin: 50px auto;
   padding: 32px;
   /* background: linear-gradient(145deg, #ffffffff, #13a700ff); */
-  background: url('/public/Soccer-Field-Vector.jpg');
+  background: url('/Soccer-Field-Vector.jpg');
   background-size: cover;
   border-radius: 20px;
   box-shadow: 0 14px 30px rgba(0,0,0,0.18);
@@ -845,7 +845,7 @@ header.nav {
   margin: 50px auto;
   padding: 32px;
   /* background: linear-gradient(145deg, #ffffffff, #13a700ff); */
-  background: url('/public/Soccer-Field-Vector.jpg');
+  background: url('/Soccer-Field-Vector.jpg');
   background-size: cover;
   border-radius: 20px;
   box-shadow: 0 14px 30px rgba(0,0,0,0.18);
@@ -1227,7 +1227,7 @@ header.nav {
     rgba(0, 0, 0, 1) 35%,
     rgba(0, 0, 0, 1) 100%
   ),
-  url("/stadium-grass.jpg");
+  url("/public/stadium-grass.jpg");
   background-size: contain;
   background-position: top center;
   background-repeat: no-repeat;
