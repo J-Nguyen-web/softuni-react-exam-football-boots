@@ -1,3 +1,41 @@
+# Jogo Bonito Store -- React Exam Project
+
+A football boots catalog and community application built with React and
+Supabase. Visitors can browse football boots, explore boot-surface
+information, and view individual product details. Registered users can
+publish boots, edit or delete their own entries, like boots, and leave
+comments.
+
+-   **GitHub repository:**
+    https://github.com/J-Nguyen-web/softuni-react-exam-football-boots
+-   **Live application:** `https://react-exam-joga-bonito.netlify.app`{=html}
+
+------------------------------------------------------------------------
+## Table of Contents
+
+
+
+------------------------------------------------------------------------
+## Project Overview
+
+**Application name:** Jogo Bonito Store
+
+**Application category:** Football boots catalog / community web
+application.
+
+**Main purpose:** Jogo Bonito Store allows football players and football
+fans to browse a catalog of football boots and learn about the different
+playing surfaces for which boots are designed. Users can create and
+manage their own boot listings, interact with listings through likes,
+and discuss products using comments. The application combines product
+discovery with user-generated content and account-based permissions.
+
+
+
+
+
+
+......................................
 # Boots Store Application
 
 A single-page React application for browsing boots, viewing details, posting comments, and liking products.  
