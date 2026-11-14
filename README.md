@@ -53,7 +53,7 @@ discovery with user-generated content and account-based permissions.
 ## Technology Stack
 
   ---------------------------------------------------------------------
-  Technology                         Purpose
+  Technology  and                       Purpose
   ---------------------------------- ----------------------------------
   React 19                           Component-based user interface
 
