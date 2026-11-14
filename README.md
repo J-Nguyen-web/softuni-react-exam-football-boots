@@ -8,7 +8,7 @@ comments.
 
 -   **GitHub repository:**
     https://github.com/J-Nguyen-web/softuni-react-exam-football-boots
--   **Live application:** `https://react-exam-joga-bonito.netlify.app`{=html}
+-   **Live application:** https://react-exam-joga-bonito.netlify.app
 
 ------------------------------------------------------------------------
 ## Table of Contents
