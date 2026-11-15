@@ -1,10 +1,13 @@
 # Jogo Bonito Store -- React Exam Project
 
 A football boots catalog and community application built with React and
-Supabase. Visitors can browse football boots, explore boot-surface
+Supabase. Visitors can browse football boots, explore terrain-surface
 information, and view individual product details. Registered users can
 publish boots, edit or delete their own entries, like boots, and leave
 comments.
+
+The application uses Supabase for authentication and data storage. 
+React is used to build the user interface and manage the client-side application.
 
 -   **GitHub repository:**
     https://github.com/J-Nguyen-web/softuni-react-exam-football-boots
@@ -44,7 +47,7 @@ discovery with user-generated content and account-based permissions.
 -   Author-only edit and delete controls.
 -   Like and unlike boot products.
 -   Post comments and delete comments authored by the current user.
--   User profile showing created boots, liked boots, and comments.
+-   User profile showing created boots, liked boots, comments and user-related activity.
 -   Form validation, loading indicators, and frontend functionality that user can see and interact with
     error/confirmation modals.
 
