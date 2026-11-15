@@ -59,23 +59,14 @@ discovery with user-generated content and account-based permissions.
   | Technology | Purpose |
   | --- | --- |
   | React 19 | Component-based user interface |
-
   | JavaScript (ES modules) | Application logic |
-
   | Vite | Development server and production build |
-
   | React Router | Client-side routing and route parameters |
-
   | Supabase | Hosted backend-as-a-service |
-
   | Supabase Auth | Registration, login, logout and session management |
-
   | Supabase PostgreSQL | Persistent application data |
-
   | `@supabase/supabase-js` | Communication with Supabase |
-
   | React Context API | Shared authentication and modal state |
-
   | CSS | Global component/page styling and responsive presentation |
   
 ------------------------------------------------------------------------
@@ -211,15 +202,8 @@ npm install
 Create a `.env` file in the `client` directory and provide the Supabase project credentials:
 
 ```env
-  ---------------------------------------------------------------------
-  | Variable | Description
-  ---------------------------------- ----------------------------------
-  | `VITE_SUPABASE_URL` | URL of the Supabase project |
-
-  | `VITE_SUPABASE_PUBLISHABLE_KEY` | Public/publishable key used by the
-                                     browser client |
-                                     
-  ---------------------------------------------------------------------
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_PUBLISH_KEY=your_supabase_publishable_key
 
 The Supabase client is initialized in `client/src/supabaseClient.js`.
 ```
@@ -408,8 +392,8 @@ The routing is configured with React Router DOM in `App.jsx`.
 ### Main Routes
 
   -----------------------------------------------------------------------
-  Route|Page|Access
-  --------------------------- --------------------- ---------------------
+  | Route | Page | Access |
+  |---|---|---|
   | `/`|Home | Public |
 
   | `/boots`| Catalog | Public |
