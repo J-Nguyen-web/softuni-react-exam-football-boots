@@ -1,4 +1,4 @@
-# Jogo Bonito Store -- React Exam Project
+# Joga Bonito Store -- React Exam Project
 
 A football boots catalog and community application built with React and
 Supabase. Visitors can browse football boots, explore terrain-surface
@@ -56,33 +56,28 @@ discovery with user-generated content and account-based permissions.
 ## Technology Stack
 
   ---------------------------------------------------------------------
-  Technology  and                       Purpose
+  | Technology | Purpose |
   ---------------------------------- ----------------------------------
-  React 19                           Component-based user interface
+  | React 19 | Component-based user interface |
 
-  JavaScript (ES modules)            Application logic
+  | JavaScript (ES modules) | Application logic |
 
-  Vite                               Development server and production
-                                     build
+  | Vite | Development server and production build |
 
-  React Router DOM 7                 Client-side routing and route
-                                     parameters
+  | React Router | Client-side routing and route parameters |
 
-  Supabase                           Hosted backend-as-a-service
+  | Supabase | Hosted backend-as-a-service |
 
-  Supabase Auth                      User registration, login, logout,
-                                     and session management
+  | Supabase Auth | Registration, login, logout and session management |
 
-  Supabase PostgreSQL                Persistent application data
+  | Supabase PostgreSQL | Persistent application data |
 
-  `@supabase/supabase-js`            Communication with Supabase
+  | `@supabase/supabase-js` | Communication with Supabase |
 
-  React Context API                  Shared authentication and modal
-                                     state
+  | React Context API | Shared authentication and modal state |
 
-  CSS                                Global and component/page styling
-  ---------------------------------------------------------------------
-
+  | CSS | Global component/page styling and responsive presentation |
+  
 ------------------------------------------------------------------------
 
 ## Application Structure
@@ -142,130 +137,136 @@ The application entry point is `src/main.jsx`. It mounts the React
 application inside `BrowserRouter`, `ModalProvider`, and `UserProvider`.
 `App.jsx` defines the page routes and shared header/footer.
 
+The frontend is deployed to Netlify. Supabase is a Backend-as-a-Service (BaaS),
+so the project does not require a separately deployed Node.js/Express API server.
+The earlier SoftUni practice server was used during development exercises,
+but the current application uses Supabase for its backend operations.
+
 ------------------------------------------------------------------------
 
-## Installation and Local Development
+## 5. Backend and Database Overview
+
+Supabase provides the backend services used by the application:
+
+- Supabase Auth manages user accounts and authentication sessions.
+- The PostgreSQL database stores boots, likes, comments, and public profile information.
+- The Supabase client library allows the React application to perform database operations.
+- Row Level Security (RLS) policies can enforce access restrictions at database level.
+
+### Database tables
+
+| Table | Purpose | Main columns used by the application |
+|---|---|---|
+| `boots` | Stores football boot products | `id`, `title`, `type`, `price`, `image`, `description`, `user_id` |
+| `likes` | Stores user likes for boots | `id`, `boots_id`, `user_id` |
+| `comments` | Stores comments associated with boots | `id`, `boots_id`, `user_id`, `message` |
+| `profiles` | Stores public profile information | `id`, `username` |
+| `auth.users` | Supabase-managed authentication accounts | `id` and Supabase-managed authentication fields |
+
+### Table relationships
+
+- A boot belongs to the user identified by `boots.user_id`.
+- A like connects a user and a boot through `likes.user_id` and `likes.boots_id`.
+- A comment connects a user and a boot through `comments.user_id` and `comments.boots_id`.
+- A profile is associated with its authentication account through the profile ID and the user ID.
+
+The application uses these identifiers to retrieve related data. For example, it uses a boot ID to retrieve its likes and comments, and a user ID to retrieve that user's products and activity.
+
+### Profile creation
+
+The application uses a database trigger associated with Supabase Auth to create a public profile when a new authentication account is created. The `handle_new_user` function takes the username from the user's registration metadata and inserts it into `public.profiles`. The trigger is named `on_auth_user_created`.
+
+### Authentication and authorization
+
+Registration and login are handled by Supabase Auth. The application stores and observes the current session through its user context.
+
+The application also checks ownership before displaying controls for editing or deleting a boot. Database-level RLS policies provide the security boundary: frontend checks control the interface, while RLS must enforce permissions when a request reaches the database.
+
+The configured `boots` policies include public read access and authenticated-user insert, update, and delete restrictions based on `auth.uid() = user_id`. For updates, the policy must check both the existing row with `USING` and the resulting row with `WITH CHECK`.
+
+## 6. Installation and Configuration
 
 ### Prerequisites
 
--   Node.js and npm
--   A Supabase project with the required database tables and
-    authentication configured
+- Node.js
+- npm
+- A Supabase project with the required tables, authentication, trigger, and RLS policies configured
 
-### 1. Clone the repository
+### Installation
 
-``` bash
+Clone the repository:
+
+```bash
 git clone https://github.com/J-Nguyen-web/softuni-react-exam-football-boots.git
 cd softuni-react-exam-football-boots
 ```
 
-### 2. Install frontend dependencies
+The Vite application is located in the `client` directory:
 
-``` bash
+```bash
 cd client
 npm install
 ```
 
-### 3. Configure environment variables
+Create a `.env` file in the `client` directory and provide the Supabase project credentials:
 
-Create a `.env` file inside the `client/` directory. Add the Supabase
-project URL and publishable key:
-
-``` env
-VITE_SUPABASE_URL=your_supabase_project_url
-VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
-```
-
-Use the values from your Supabase project's API/Connect settings. Do not
-commit the `.env` file or expose a Supabase secret/service-role key in
-the frontend.
-
-### 4. Start the development server
-
-``` bash
-npm run dev
-```
-
-Vite will print the local development URL in the terminal (normally
-`http://localhost:5173`).
-
-### 5. Create a production build
-
-``` bash
-npm run build
-```
-
-To preview the production build locally:
-
-``` bash
-npm run preview
-```
-
-------------------------------------------------------------------------
-
-## Environment Configuration
-
-The frontend reads the following Vite environment variables:
-
+```env
   ---------------------------------------------------------------------
-  Variable                           Description
+  | Variable | Description
   ---------------------------------- ----------------------------------
-  `VITE_SUPABASE_URL`                URL of the Supabase project
+  | `VITE_SUPABASE_URL` | URL of the Supabase project |
 
-  `VITE_SUPABASE_PUBLISHABLE_KEY`    Public/publishable key used by the
-                                     browser client
+  | `VITE_SUPABASE_PUBLISHABLE_KEY` | Public/publishable key used by the
+                                     browser client |
+                                     
   ---------------------------------------------------------------------
 
 The Supabase client is initialized in `client/src/supabaseClient.js`.
+```
 
-The publishable key is intended for browser use. Database access must be
-restricted through correctly configured Supabase Row Level Security
-(RLS) policies. Never place a service-role key in a Vite environment
-variable.
+Use the values from the Supabase project settings. Do not commit the `.env` file or expose secret/service-role keys in frontend code.
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Create a production build:
+
+```bash
+npm run build
+```
+
+## 7. Deployment
+
+The frontend is deployed to Netlify from the GitHub repository.
+
+The Netlify build configuration uses:
+
+| Setting | Value |
+|---|---|
+| Branch | `main` |
+| Base directory | `client` |
+| Build command | `npm run build` |
+| Publish directory | `dist` |
+
+The Supabase URL and publishable key must also be configured as environment variables in the Netlify site settings. After changing environment variables, a new deployment is required so the production build can use the updated values.
+
+## 8. Project Requirements and Implementation
+
+The project demonstrates the main requirements of the React application exam:
+
+- A React single-page application with routing.
+- Registration, login, logout, and persisted authentication state.
+- A backend service using Supabase.
+- CRUD operations for boot products.
+- Ownership restrictions for modifying and deleting user-created products.
+- Forms and input validation.
+- Shared authentication state through Context.
+- A deployed frontend application.
 
 ------------------------------------------------------------------------
-
-## Supabase Backend
-
-The project uses **Supabase (BaaS)** as its remote backend. Supabase
-provides the hosted PostgreSQL database and authentication service instead of previous SoftUni practice server, so a
-separate Node.js/Express backend deployment is not required.
-
-The current frontend communicates with Supabase through
-`@supabase/supabase-js`. The application uses the following tables:
-
-  -----------------------------------------------------------------------
-  Table                   Purpose                 Main data used by the
-                                                  application
-  ----------------------- ----------------------- -----------------------
-  `boots`                 Main CRUD collection    Boot model, terrain
-                                                  type, price, image URL,
-                                                  description, author ID,
-                                                  creation timestamp
-
-  `likes`                 User interactions       Boot ID and user ID
-
-  `comments`              User discussions        Comment message, boot
-                                                  ID, and user ID
-
-  `profiles`              Public profile          User ID and username
-                          information             
-  -----------------------------------------------------------------------
-
-Supabase Auth manages user accounts. The application stores the username
-as user metadata during registration and reads profile usernames when
-displaying comment authors.
-
-### Data relationships
-
--   Each boot product is associated with its creator through
-    `boots.user_id`.
--   Each like connects a user to a boot through `likes.user_id` and
-    `likes.boots_id`.
--   Each comment connects a user to a boot through `comments.user_id`
-    and `comments.boots_id`.
--   The `profiles` table is queried to display usernames next to
-    comments.
 
 ### Security note
 
@@ -278,42 +279,11 @@ prevent users from modifying or deleting another user's records.
 
 ------------------------------------------------------------------------
 
-## Deployment
-
-### Frontend -- Netlify
-
-The React frontend is deployed as a Vite static site on Netlify.
-
-Recommended Netlify build settings when the Netlify site is connected to
-the repository root:
-
-  Setting             Value
-  ------------------- -----------------
-  Base directory      `client`
-  Build command       `npm run build`
-  Publish directory   `dist`
-
-Add the same two environment variables from the [Environment
-Configuration](#environment-configuration) section in the Netlify site
-settings.
-
-Because the application uses client-side routing, configure the hosting
-provider to serve `index.html` for application routes (SPA
-fallback/redirect). This allows direct navigation and page refreshes on
-routes such as `/boots/details/:bootsId`.
-
-### Backend -- Supabase
-
-The database and authentication are hosted by Supabase. There is no
-separate backend server to deploy for this BaaS setup.
-
-------------------------------------------------------------------------
-
 # React Exam Functional Guide
 
 ## 1. Project Overview
 
-**Application Name:** Jogo Bonito Store
+**Application Name:** Joga Bonito Store
 
 **Application Category / Topic:** Football boots catalog and community
 application.
@@ -438,34 +408,37 @@ The routing is configured with React Router DOM in `App.jsx`.
 ### Main Routes
 
   -----------------------------------------------------------------------
-  Route                       Page                  Access
+  Route|Page|Access
   --------------------------- --------------------- ---------------------
-  `/`                         Home                  Public
+  | `/`|Home | Public |
 
-  `/boots`                    Catalog               Public
+  | `/boots`| Catalog | Public |
 
-  `/boots/details/:bootsId`   Boot details          Public
+  | `/boots/details/:bootsId` | Boot details | Public |
 
-  `/terrains`                 Terrain guide         Public
+  | `/terrains` | Terrain guide | Public |
 
-  `/size-guide`               Size guide            Public
+  | `/size-guide`| Size guide | Public |
 
-  `/boots/create`             Create boot product   Protected
+  | `/boots/create` | Create boot product | Protected |
 
-  `/boots/edit/:bootsId`      Edit boot product     Protected
+  | `/boots/edit/:bootsId` | Edit boot product | Protected|
 
-  `/profile`                  User profile          Protected
+  | `/profile`| User profile| Protected| 
 
-  `/login`                    Login                 Guest only
+  | `/login`|Login|Guest only |
 
-  `/register`                 Register              Guest only
+  | `/register`|Register|Guest only |
 
-  `/logout`                   Logout action         Route is not wrapped
-                                                    in either route guard
+  | `/logout`|Logout action|Route is not wrapped in either route guard |
+  
   -----------------------------------------------------------------------
 
 The application has more than five client-side routes and uses URL
 parameters for the boot details and edit pages.
+
+The route table describes the intended access rules. 
+The actual route configuration in `App.jsx` is the source of truth for the final submitted version.
 
 ### Nested & Parameterized Routes
 
