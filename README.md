@@ -161,19 +161,32 @@ Supabase provides the backend services used by the application:
 - A comment connects a user and a boot through `comments.user_id` and `comments.boots_id`.
 - A profile is associated with its authentication account through the profile ID and the user ID.
 
-The application uses these identifiers to retrieve related data. For example, it uses a boot ID to retrieve its likes and comments, and a user ID to retrieve that user's products and activity.
+The application uses these identifiers to retrieve related data. 
+For example, it uses a boot ID to retrieve its likes and comments, 
+and a user ID to retrieve that user's products and activity.
 
 ### Profile creation
 
-The application uses a database trigger associated with Supabase Auth to create a public profile when a new authentication account is created. The `handle_new_user` function takes the username from the user's registration metadata and inserts it into `public.profiles`. The trigger is named `on_auth_user_created`.
+The application uses a database trigger associated with Supabase Auth 
+to create a public profile when a new authentication account is created. 
+The `handle_new_user` function takes the username from the user's 
+registration metadata and inserts it into `public.profiles`. 
+The trigger is named `on_auth_user_created`.
 
 ### Authentication and authorization
 
-Registration and login are handled by Supabase Auth. The application stores and observes the current session through its user context.
+Registration and login are handled by Supabase Auth. The application 
+stores and observes the current session through its user context.
 
-The application also checks ownership before displaying controls for editing or deleting a boot. Database-level RLS policies provide the security boundary: frontend checks control the interface, while RLS must enforce permissions when a request reaches the database.
+The application also checks ownership before displaying controls for 
+editing or deleting a boot. Database-level RLS policies provide 
+the security boundary: frontend checks control the interface, 
+while RLS must enforce permissions when a request reaches the database.
 
-The configured `boots` policies include public read access and authenticated-user insert, update, and delete restrictions based on `auth.uid() = user_id`. For updates, the policy must check both the existing row with `USING` and the resulting row with `WITH CHECK`.
+The configured `boots` policies include public read access 
+and authenticated-user insert, update, and delete restrictions 
+based on `auth.uid() = user_id`. For updates, the policy must check 
+both the existing row with `USING` and the resulting row with `WITH CHECK`.
 
 ## 6. Installation and Configuration
 
@@ -181,7 +194,8 @@ The configured `boots` policies include public read access and authenticated-use
 
 - Node.js
 - npm
-- A Supabase project with the required tables, authentication, trigger, and RLS policies configured
+- A Supabase project with the required tables, authentication,
+- trigger, and RLS policies configured
 
 ### Installation
 
@@ -199,7 +213,8 @@ cd client
 npm install
 ```
 
-Create a `.env` file in the `client` directory and provide the Supabase project credentials:
+Create a `.env` file in the `client` directory 
+and provide the Supabase project credentials:
 
 ```env
 VITE_SUPABASE_URL=your_supabase_project_url
@@ -208,7 +223,8 @@ VITE_SUPABASE_PUBLISH_KEY=your_supabase_publishable_key
 The Supabase client is initialized in `client/src/supabaseClient.js`.
 ```
 
-Use the values from the Supabase project settings. Do not commit the `.env` file or expose secret/service-role keys in frontend code.
+Use the values from the Supabase project settings. 
+Do not commit the `.env` file or expose secret/service-role keys in frontend code.
 
 Start the development server:
 
@@ -235,7 +251,9 @@ The Netlify build configuration uses:
 | Build command | `npm run build` |
 | Publish directory | `dist` |
 
-The Supabase URL and publishable key must also be configured as environment variables in the Netlify site settings. After changing environment variables, a new deployment is required so the production build can use the updated values.
+The Supabase URL and publishable key must also be configured as environment 
+variables in the Netlify site settings. After changing environment variables, 
+a new deployment is required so the production build can use the updated values.
 
 ## 8. Project Requirements and Implementation
 
@@ -395,25 +413,15 @@ The routing is configured with React Router DOM in `App.jsx`.
   | Route | Page | Access |
   |---|---|---|
   | `/`|Home | Public |
-
   | `/boots`| Catalog | Public |
-
   | `/boots/details/:bootsId` | Boot details | Public |
-
   | `/terrains` | Terrain guide | Public |
-
   | `/size-guide`| Size guide | Public |
-
   | `/boots/create` | Create boot product | Protected |
-
   | `/boots/edit/:bootsId` | Edit boot product | Protected|
-
   | `/profile`| User profile| Protected| 
-
   | `/login`|Login|Guest only |
-
   | `/register`|Register|Guest only |
-
   | `/logout`|Logout action|Route is not wrapped in either route guard |
   
   -----------------------------------------------------------------------
@@ -422,7 +430,8 @@ The application has more than five client-side routes and uses URL
 parameters for the boot details and edit pages.
 
 The route table describes the intended access rules. 
-The actual route configuration in `App.jsx` is the source of truth for the final submitted version.
+The actual route configuration in `App.jsx` is the source of truth 
+for the final submitted version.
 
 ### Nested & Parameterized Routes
 
@@ -436,11 +445,29 @@ Parameterized routes:
     whose details should be loaded.
 -   `/boots/edit/:bootsId` -- Uses `useParams()` to identify the boot to
     load into the edit form.
+    
+Example:
+```jsx
+<Route
+    path="/boots/details/:bootsId"
+    element={<BootsDetails />}
+/>
+```
+
+The component reads the URL parameter with `useParams()`:
+
+```js
+const { bootsId } = useParams();
+```
+
+The value is then used to retrieve the corresponding boot from Supabase.
 
 ## 5. List → Details Flow
 
-### Catalog / List Page
+### Boots Catalog
 
+The catalog retrieves boot records from the `boots` table in Supabase 
+and displays them to visitors.
 The catalog displays boot products with their model, terrain type,
 price, image, description, and associated like count.
 
@@ -459,9 +486,22 @@ The home page also displays two curated lists:
 Users navigate from a boot card to its details page using React Router
 links.
 
-The details page reads `bootsId` from the URL through `useParams()`. It
-fetches the selected boot, its likes, its comments, and profile
-usernames from Supabase.
+The details page retrieves the selected boot using the `bootsId` route parameter. 
+It also retrieves related information such as likes, comments, and profile usernames.
+
+The page uses the boot's `user_id` to determine its creator and compare that 
+ID with the currently authenticated user's ID.
+
+Example ownership check:
+
+```js
+const isOwner = user?.id === boots?.user_id;
+```
+
+This comparison is used to decide whether the Edit and Delete controls should be displayed.
+
+The details page also presents the boot's comments and like information. 
+Related profile records are used to display the comment author's username.
 
 The page displays the boot information, like/unlike interaction,
 comments, and owner-specific edit/delete actions. After successful
@@ -478,6 +518,20 @@ Supabase provides:
 -   Authentication and session management.
 -   Remote data access through the Supabase JavaScript client.
 
+Supabase is the application's backend. The React application communicates
+with the PostgreSQL database using the Supabase client.
+
+The main tables used by the application are:
+
+| Table | Purpose | Main fields |
+|---|---|---|
+| `boots` | Boot products | `id`, `title`, `type`, `price`, `image`, `description`, `user_id` |
+| `likes` | Likes associated with boots and users | `id`, `boots_id`, `user_id` |
+| `comments` | Comments associated with boots and users | `id`, `boots_id`, `user_id`, `message` |
+| `profiles` | Public profile information | `id`, `username` |
+
+Supabase Auth separately manages authentication accounts in `auth.users`. The public `profiles` table stores the username used by the application.
+
 The frontend uses the Supabase client initialized in
 `supabaseClient.js`. Data is fetched from and persisted to the remote
 database; the application does not rely on hardcoded boot products.
@@ -486,12 +540,47 @@ There is no separate custom Node.js/Express backend deployment in the
 current application. The legacy `server-softuni/` directory is not used
 by the Supabase-based frontend.
 
+### How the tables are connected
+
+- `boots.user_id` identifies the user who created a boot.
+- `likes.user_id` identifies the user who liked a boot.
+- `likes.boots_id` identifies the boot receiving the like.
+- `comments.user_id` identifies the author of a comment.
+- `comments.boots_id` identifies the boot to which the comment belongs.
+- `profiles.id` corresponds to the authentication user's ID.
+
+These IDs allow the application to retrieve related records. For example, the details page retrieves likes and comments for a particular boot, while the profile page retrieves records associated with the current user's ID.
+
+### Data retrieval
+
+The application uses Supabase queries to retrieve records from the relevant tables. It can request several related data sets together when a page needs more than one type of information.
+
+For example, the boot details view needs the boot record, its likes, its comments, and profile information for comment authors.
+
+### Database security
+
+Row Level Security (RLS) is important because frontend restrictions alone cannot protect database records. A user could bypass a hidden button and attempt a request directly.
+
+The configured `boots` policies include:
+
+- Public read access.
+- Insert access for authenticated users when `user_id` matches `auth.uid()`.
+- Update access restricted to the record owner.
+- Delete access restricted to the record owner.
+
+For update policies, `USING` checks which existing rows can be updated, 
+while `WITH CHECK` verifies that the resulting row still satisfies the ownership condition.
+
+The application also uses ownership checks in the interface to avoid showing edit and delete actions to users who do not own the boot.
+
 ## 7. Data Operations (CRUD)
 
 The main CRUD collection is `boots`, which is separate from the Users
 collection.
 
 ### Create (INSERT)
+
+Authenticated users can create a boot through the create form. After validation, the application inserts the submitted values into the `boots` table.
 
 -   An authenticated user opens `/boots/create`.
 -   The user fills in the controlled boot form.
@@ -500,6 +589,23 @@ collection.
     table.
 -   The current user's ID is stored in `user_id`.
 -   After a successful insert, the user is redirected to `/boots`.
+
+The current user's ID is included as `user_id`, which associates the new boot with its creator.
+
+Example:
+
+```js
+await supabase
+    .from('boots')
+    .insert({
+        title,
+        type,
+        price: Number(price),
+        image,
+        description,
+        user_id: user.id
+    });
+```
 
 ### Read (SELECT)
 
@@ -542,8 +648,9 @@ RLS must prevent deletion of records owned by other users.
 
 ### Additional interactions
 
--   Likes are stored in the `likes` table. A user can like a boot or
-    remove their existing like.
+-   Likes are stored in the `likes` table. A like record connects a user to a boot through `user_id`
+   and `boots_id`. The application uses these values to determine whether the current user has liked
+    a particular boot and to calculate or display like information.
 -   Comments are stored in the `comments` table. Authenticated users can
     post comments.
 -   A user can delete only their own comments through the owner check in
