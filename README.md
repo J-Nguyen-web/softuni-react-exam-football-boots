@@ -1,4 +1,4 @@
-# Joga Bonito Store -- React Exam Project
+# Joga Bonito Store - React Exam Project
 
 A football boots catalog and community application built with React and
 Supabase. Visitors can browse football boots, explore terrain-surface
@@ -26,7 +26,7 @@ React is used to build the user interface and manage the client-side application
 **Application category:** Football boots catalog / community web
 application.
 
-**Main purpose:** Jogo Bonito Store allows football players and football
+**Main purpose:** Joga Bonito Store allows football players and football
 fans to browse a catalog of football boots and learn about the different
 playing surfaces for which boots are designed. Users can create and
 manage their own boot products, interact through likes,
@@ -57,7 +57,7 @@ discovery with user-generated content and account-based permissions.
 
   ---------------------------------------------------------------------
   | Technology | Purpose |
-  ---------------------------------- ----------------------------------
+  | --- | --- |
   | React 19 | Component-based user interface |
 
   | JavaScript (ES modules) | Application logic |
