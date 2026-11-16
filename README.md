@@ -43,8 +43,7 @@ React is used to build the user interface and manage the client-side application
 ------------------------------------------------------------------------
 ## 1. Project Overview
 [Back to Contents](#table-of-contents)
-<p></p>
-</br>
+
 **Application name:** Jogo Bonito Store
 
 **Application category:** Football boots catalog / community web
@@ -59,8 +58,7 @@ discovery with user-generated content and account-based permissions.
 
 ## 2. Features
 [Back to Contents](#table-of-contents)
-<p></p>
-</br>
+
 -   Public home page with the three most-liked and three newest boot
     products.
 -   Public catalog with search by boot model or terrain type.
@@ -81,8 +79,7 @@ discovery with user-generated content and account-based permissions.
 
 ## 3. Technology Stack
 [Back to Contents](#table-of-contents)
-<p></p>
-</br>
+
   ---------------------------------------------------------------------
   | Technology | Purpose |
   | --- | --- |
@@ -101,8 +98,7 @@ discovery with user-generated content and account-based permissions.
 
 ## 4. Application Structure
 [Back to Contents](#table-of-contents)
-<p></p>
-</br>
+
 The frontend application is located in the `client/` directory.
 
 ``` text
@@ -167,8 +163,6 @@ but the current application uses Supabase for its backend operations.
 
 ## 5. Backend and Database Overview
 [Back to Contents](#table-of-contents)
-</br>
-
 
 Supabase provides the backend services used by the application:
 
@@ -223,8 +217,6 @@ both the existing row with `USING` and the resulting row with `WITH CHECK`.
 
 ## 6. Installation and Configuration
 [Back to Contents](#table-of-contents)
-</br>
-
 
 ### Prerequisites
 
@@ -276,8 +268,6 @@ npm run build
 
 ## 7. Deployment 
 [Back to Contents](#table-of-contents)
-</br>
-
 
 The frontend is deployed to Netlify from the GitHub repository.
 
@@ -296,8 +286,6 @@ a new deployment is required so the production build can use the updated values.
 
 ## 8. Project Requirements and Implementation
 [Back to Contents](#table-of-contents)
-</br>
-
 
 The project demonstrates the main requirements of the React application exam:
 
@@ -327,8 +315,6 @@ prevent users from modifying or deleting another user's records.
 
 ## 1. Overview
 [Back to Contents](#table-of-contents)
-</br>
-
 
 **Application Name:** Joga Bonito Store
 
@@ -346,8 +332,6 @@ creating a small community around football footwear.
 
 ## 2. User Access and Permissions
 [Back to Contents](#table-of-contents)
-</br>
-
 
 ### Guest (Not Authenticated)
 
@@ -407,8 +391,6 @@ functionality.
 
 ## 3. Authentication and Session Handling
 [Back to Contents](#table-of-contents)
-</br>
-
 
 ### Authentication Flow
 
@@ -445,8 +427,6 @@ modal notification system.
 
 ## 4. Routing Structure
 [Back to Contents](#table-of-contents)
-</br>
-
 
 ### Route Guards Logic
 
@@ -518,8 +498,6 @@ The value is then used to retrieve the corresponding boot from Supabase.
 
 ## 5. List to Details Flow
 [Back to Contents](#table-of-contents)
-</br>
-
 
 ### Boots Catalog
 
@@ -567,8 +545,6 @@ the catalog/details page.
 
 ## 6. Data Source and Backend
 [Back to Contents](#table-of-contents)
-</br>
-
 
 **Backend Type:** Backend-as-a-Service (BaaS) -- Supabase.
 
@@ -635,8 +611,6 @@ The application also uses ownership checks in the interface to avoid showing edi
 
 ## 7. Data Operations (CRUD)
 [Back to Contents](#table-of-contents)
-</br>
-
 
 The main CRUD collection is `boots`, which is separate from the Users
 collection.
@@ -721,8 +695,6 @@ RLS must prevent deletion of records owned by other users.
 
 ## 8. Forms and Validation
 [Back to Contents](#table-of-contents)
-</br>
-
 
 The application validates input before sending data to Supabase. Validation helps prevent empty or incorrectly formatted values from being submitted.
 
@@ -782,8 +754,6 @@ exist.
 
 ## 9. React Specific Techniques
 [Back to Contents](#table-of-contents)
-</br>
-
 
 ### Hooks & Component Lifecycle
 
@@ -836,8 +806,6 @@ component styling library.
 
 ## 10. Typical User Flow
 [Back to Contents](#table-of-contents)
-</br>
-
 
 A typical guest-to-user flow is:
 
@@ -856,8 +824,6 @@ This flow demonstrates how routing, authentication, database operations, and con
 
 ## 11. Error and Edge Case Handling
 [Back to Contents](#table-of-contents)
-</br>
-
 
 ### Authentication Errors
 
@@ -905,8 +871,6 @@ The catalog, profile, likes, or comments may contain no records. The interface s
 
 ## Conclusion
 [Back to Contents](#table-of-contents)
-</br>
-
 
 The football Boots Store Project demonstrates the development of a React single-page application integrated with Supabase as its backend service. It brings togeher user authentication, database operations, CRUD functionality, protected routes and user interactions within a single application.
 The project applies the main concepts and techniques covered in the react course, including component-based architecture, React Hooks, Context API, routing, form handling, and communication with a backend service.
