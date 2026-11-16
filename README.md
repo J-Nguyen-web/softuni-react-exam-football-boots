@@ -43,6 +43,7 @@ React is used to build the user interface and manage the client-side application
 ------------------------------------------------------------------------
 ## 1. Project Overview
 [Back to Contents](#table-of-contents)
+<p></p>
 </br>
 
 **Application name:** Jogo Bonito Store
@@ -59,6 +60,7 @@ discovery with user-generated content and account-based permissions.
 
 ## 2. Features
 [Back to Contents](#table-of-contents)
+<p></p>
 </br>
 
 -   Public home page with the three most-liked and three newest boot
@@ -81,6 +83,7 @@ discovery with user-generated content and account-based permissions.
 
 ## 3. Technology Stack
 [Back to Contents](#table-of-contents)
+<p></p>
 </br>
 
   ---------------------------------------------------------------------
