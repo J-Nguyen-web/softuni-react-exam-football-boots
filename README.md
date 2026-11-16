@@ -20,11 +20,11 @@ The project is currently deployed on Netlify, but the latest changes could not b
 
 Known limitations:
 
-**Search:** The search functionality currently works only on the Catalog page.
+**Search:** The search functionality wasnt refactored before the last limited deployment and currently not works. (but its fixed in the code fo the repository)
 
 **Terrains navigation:** The Terrains# link to specific section in terrains page may not navigate to the intended section correctly because of missing _redirects file that netlify needs for such operation.
 
-These issues are acknowledged and may be addressed in future updates.
+These issues are acknowledged and are fixed in the repository code.
 
 ------------------------------------------------------------------------
 
