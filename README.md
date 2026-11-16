@@ -260,8 +260,8 @@ Create a production build:
 npm run build
 ```
 
-## 7. Deployment | [Back to Contents](#table-of-contents)
-
+## 7. Deployment 
+[Back to Contents](#table-of-contents)
 
 The frontend is deployed to Netlify from the GitHub repository.
 
@@ -279,6 +279,7 @@ variables in the Netlify site settings. After changing environment variables,
 a new deployment is required so the production build can use the updated values.
 
 ## 8. Project Requirements and Implementation
+[Back to Contents](#table-of-contents)
 
 The project demonstrates the main requirements of the React application exam:
 
@@ -307,6 +308,7 @@ prevent users from modifying or deleting another user's records.
 # React Exam Functional Guide
 
 ## 1. Overview
+[Back to Contents](#table-of-contents)
 
 **Application Name:** Joga Bonito Store
 
