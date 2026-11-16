@@ -80,7 +80,6 @@ discovery with user-generated content and account-based permissions.
 ## 3. Technology Stack
 [Back to Contents](#table-of-contents)
 
-  ---------------------------------------------------------------------
   | Technology | Purpose |
   | --- | --- |
   | React 19 | Component-based user interface |
