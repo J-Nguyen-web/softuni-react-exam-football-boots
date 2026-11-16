@@ -44,7 +44,6 @@ React is used to build the user interface and manage the client-side application
 ## 1. Project Overview
 [Back to Contents](#table-of-contents)
 <p></p>
-</br>
 
 
 **Application name:** Jogo Bonito Store
