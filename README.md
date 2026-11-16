@@ -45,7 +45,6 @@ React is used to build the user interface and manage the client-side application
 [Back to Contents](#table-of-contents)
 <p></p>
 </br>
-
 **Application name:** Jogo Bonito Store
 
 **Application category:** Football boots catalog / community web
@@ -62,7 +61,6 @@ discovery with user-generated content and account-based permissions.
 [Back to Contents](#table-of-contents)
 <p></p>
 </br>
-
 -   Public home page with the three most-liked and three newest boot
     products.
 -   Public catalog with search by boot model or terrain type.
@@ -85,7 +83,6 @@ discovery with user-generated content and account-based permissions.
 [Back to Contents](#table-of-contents)
 <p></p>
 </br>
-
   ---------------------------------------------------------------------
   | Technology | Purpose |
   | --- | --- |
@@ -104,8 +101,8 @@ discovery with user-generated content and account-based permissions.
 
 ## 4. Application Structure
 [Back to Contents](#table-of-contents)
+<p></p>
 </br>
-
 The frontend application is located in the `client/` directory.
 
 ``` text
