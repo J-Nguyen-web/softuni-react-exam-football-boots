@@ -42,6 +42,7 @@ React is used to build the user interface and manage the client-side application
 
 ------------------------------------------------------------------------
 ## 1. Project Overview
+[Back to Contents](#table-of-contents)
 
 **Application name:** Jogo Bonito Store
 
@@ -56,6 +57,7 @@ and discuss using comments. The application combines product
 discovery with user-generated content and account-based permissions.
 
 ## 2. Features
+[Back to Contents](#table-of-contents)
 
 -   Public home page with the three most-liked and three newest boot
     products.
@@ -76,6 +78,7 @@ discovery with user-generated content and account-based permissions.
 ------------------------------------------------------------------------
 
 ## 3. Technology Stack
+[Back to Contents](#table-of-contents)
 
   ---------------------------------------------------------------------
   | Technology | Purpose |
@@ -94,6 +97,7 @@ discovery with user-generated content and account-based permissions.
 ------------------------------------------------------------------------
 
 ## 4. Application Structure
+[Back to Contents](#table-of-contents)
 
 The frontend application is located in the `client/` directory.
 
@@ -158,6 +162,7 @@ but the current application uses Supabase for its backend operations.
 ------------------------------------------------------------------------
 
 ## 5. Backend and Database Overview
+[Back to Contents](#table-of-contents)
 
 Supabase provides the backend services used by the application:
 
@@ -211,6 +216,7 @@ based on `auth.uid() = user_id`. For updates, the policy must check
 both the existing row with `USING` and the resulting row with `WITH CHECK`.
 
 ## 6. Installation and Configuration
+[Back to Contents](#table-of-contents)
 
 ### Prerequisites
 
@@ -325,6 +331,7 @@ products, edit or remove their products, like boots, and post comments,
 creating a small community around football footwear.
 
 ## 2. User Access and Permissions
+[Back to Contents](#table-of-contents)
 
 ### Guest (Not Authenticated)
 
@@ -383,6 +390,7 @@ functionality.
     Supabase RLS policies.
 
 ## 3. Authentication and Session Handling
+[Back to Contents](#table-of-contents)
 
 ### Authentication Flow
 
@@ -418,6 +426,7 @@ modal notification system.
     authentication state has been resolved.
 
 ## 4. Routing Structure
+[Back to Contents](#table-of-contents)
 
 ### Route Guards Logic
 
@@ -488,6 +497,7 @@ const { bootsId } = useParams();
 The value is then used to retrieve the corresponding boot from Supabase.
 
 ## 5. List to Details Flow
+[Back to Contents](#table-of-contents)
 
 ### Boots Catalog
 
@@ -534,6 +544,7 @@ actions, the component refreshes the relevant data or navigates back to
 the catalog/details page.
 
 ## 6. Data Source and Backend
+[Back to Contents](#table-of-contents)
 
 **Backend Type:** Backend-as-a-Service (BaaS) -- Supabase.
 
@@ -599,6 +610,7 @@ while `WITH CHECK` verifies that the resulting row still satisfies the ownership
 The application also uses ownership checks in the interface to avoid showing edit and delete actions to users who do not own the boot.
 
 ## 7. Data Operations (CRUD)
+[Back to Contents](#table-of-contents)
 
 The main CRUD collection is `boots`, which is separate from the Users
 collection.
@@ -682,6 +694,7 @@ RLS must prevent deletion of records owned by other users.
     the UI; database policies should enforce this restriction as well.
 
 ## 8. Forms and Validation
+[Back to Contents](#table-of-contents)
 
 The application validates input before sending data to Supabase. Validation helps prevent empty or incorrectly formatted values from being submitted.
 
@@ -740,6 +753,7 @@ and prevents the submit callback from running when validation errors
 exist.
 
 ## 9. React Specific Techniques
+[Back to Contents](#table-of-contents)
 
 ### Hooks & Component Lifecycle
 
@@ -791,6 +805,7 @@ components/pages. Styling is implemented with standard CSS rather than a
 component styling library.
 
 ## 10. Typical User Flow
+[Back to Contents](#table-of-contents)
 
 A typical guest-to-user flow is:
 
@@ -808,6 +823,7 @@ A typical guest-to-user flow is:
 This flow demonstrates how routing, authentication, database operations, and conditional rendering work together.
 
 ## 11. Error and Edge Case Handling
+[Back to Contents](#table-of-contents)
 
 ### Authentication Errors
 
@@ -854,6 +870,7 @@ Hiding an edit or delete button is a user-interface measure, not a security boun
 The catalog, profile, likes, or comments may contain no records. The interface should handle empty collections without assuming that at least one record exists.
 
 ## Conclusion
+[Back to Contents](#table-of-contents)
 
 The football Boots Store Project demonstrates the development of a React single-page application integrated with Supabase as its backend service. It brings togeher user authentication, database operations, CRUD functionality, protected routes and user interactions within a single application.
 The project applies the main concepts and techniques covered in the react course, including component-based architecture, React Hooks, Context API, routing, form handling, and communication with a backend service.
