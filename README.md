@@ -649,7 +649,7 @@ RLS must prevent deletion of records owned by other users.
 ### Additional interactions
 
 -   Likes are stored in the `likes` table. A like record connects a user to a boot through `user_id`
-   and `boots_id`. The application uses these values to determine whether the current user has liked
+    and `boots_id`. The application uses these values to determine whether the current user has liked
     a particular boot and to calculate or display like information.
 -   Comments are stored in the `comments` table. Authenticated users can
     post comments.
@@ -657,6 +657,12 @@ RLS must prevent deletion of records owned by other users.
     the UI; database policies should enforce this restriction as well.
 
 ## 8. Forms & Validation
+
+The application validates input before sending data to Supabase. Validation helps prevent empty or incorrectly formatted values from being submitted.
+
+The boot creation form uses reusable validation logic through the project's form-validation hook and validation function. Submission is guarded by a loading/sending state to prevent repeated submissions while a request is in progress.
+
+Validation errors are displayed next to the relevant fields where the form supports inline validation. Errors returned by the backend are handled separately and can be presented through the application's modal/error mechanism.
 
 ### Forms Used
 
