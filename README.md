@@ -16,7 +16,29 @@ React is used to build the user interface and manage the client-side application
 ------------------------------------------------------------------------
 ## Table of Contents
 
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Application Structure](#application-structure)
+- [Backend and Database Overview](#backend-and-database-overview)
+- [Installation and Configuration](#installation-and-configuration)
+- [Deployment](#deployment)
+- [Project Requirements and Implementation](#project-requirements-and-implementation)
 
+
+### Functional Guide
+- [Project Overview](#project-overview)
+- [User Access & Permissions](#user-access--permissions)
+- [Authentication & Session Handling](#authentication--session-handling)
+- [Routing Structure](#routing-structure)
+- [List → Details Flow](#list--details-flow)
+- [Data Source & Backend](#data-source--backend)
+- [Data Operations (CRUD)](#data-operations-crud)
+- [Forms & Validation](#forms--validation)
+- [React-Specific Techniques](#react-specific-techniques)
+- [Typical User Flow](#typical-user-flow)
+- [Error & Edge Case Handling](#error--edge-case-handling)
+- [Conclusion](#conclusion)
 
 ------------------------------------------------------------------------
 ## Project Overview
