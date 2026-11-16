@@ -260,8 +260,9 @@ Create a production build:
 npm run build
 ```
 
-## 7. Deployment
-[Back to Contents](#table-of-contents)
+## 7. Deployment | [Back to Contents](#table-of-contents)
+
+
 The frontend is deployed to Netlify from the GitHub repository.
 
 The Netlify build configuration uses:
