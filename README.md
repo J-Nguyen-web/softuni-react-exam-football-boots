@@ -767,15 +767,20 @@ component styling library.
 
 ## 10. Typical User Flow
 
-1.  A visitor opens the home page and browses the newest and most-liked
-    football boots.
-2.  The visitor opens the catalog, searches by model or terrain type,
-    and selects a boot to view its details.
-3.  To create a product or interact with a boot, the visitor registers
-    or logs in.
-4.  The authenticated user creates a boot product, likes other users'
-    boots, posts comments, and manages their own products through the
-    details page and profile.
+A typical guest-to-user flow is:
+
+1. A visitor opens the home page.
+2. The visitor browses the boots catalog.
+3. The visitor opens a boot details page.
+4. The visitor chooses to register or log in to access account-restricted actions.
+5. Supabase Auth authenticates the user.
+6. The user context updates to reflect the authenticated session.
+7. The user can create a boot, like products, and add comments.
+8. The user can open their profile to view account-related information.
+9. The owner can edit or delete their own boot products.
+10. The user logs out, and the application clears the authenticated state.
+
+This flow demonstrates how routing, authentication, database operations, and conditional rendering work together.
 
 ## 11. Error & Edge Case Handling
 
@@ -811,90 +816,22 @@ component styling library.
     liked boots, and comments.
 -   Loading components are shown while page data is being fetched.
 
-------------------------------------------------------------------------
+### Loading states
 
+Data retrieval and form submissions can take time. Loading indicators and submission guards help communicate that work is in progress and prevent repeated submissions.
 
+### Unauthorized actions
 
-......................................
-# Boots Store Application
+Hiding an edit or delete button is a user-interface measure, not a security boundary. Supabase RLS must reject requests that violate ownership rules.
 
-A single-page React application for browsing boots, viewing details, posting comments, and liking products.  
-The project focuses on client-side architecture, RESTful data handling, and role-based UI behavior.
+### Empty results
 
----
+The catalog, profile, likes, or comments may contain no records. The interface should handle empty collections without assuming that at least one record exists.
 
-## Overview
+## Conclusion
 
-The application allows users to:
-- Browse a catalog of boots
-- View detailed information for each item
-- Post and manage comments
-- Like and unlike boots
-- Perform owner-restricted actions such as editing or deleting entries
-
-Authentication and authorization determine available actions in the UI.
+The football Boots Store Project demonstrates the development of a React single-page application integrated with Supabase as its backend service. It brings togeher user authentication, database operations, CRUD functionality, protected routes and user interactions within a single application.
+The project applies the main concepts and techniques covered in the react course, including component-based architecture, React Hooks, Context API, routing, form handling, and communication with a backend service.
 
 ---
 
-## Features
-
-- User authentication (login / register)
-- Persistant data using localStorage
-- Boots catalog with details page
-- Comments system
-- Like / unlike functionality
-- Owner-only edit and delete actions
-- Custom reusable data-fetching hook
-- Client-side state synchronization without page reloads
-
----
-
-## Tech Stack
-
-- React
-- React Router
-- Context API
-- Fetch API
-- CSS
-- Vite
-
----
-
-## Project Structure
-
-```txt
-src/
-│── components/
-│   ├── boots/
-│   ├── comments/
-│   └── common/
-│
-│── context/
-│   ├── UserContext.jsx
-│   └── ModalContext.jsx
-│
-│── hooks/
-│   ├── useReq.js
-│   └── useForm.js
-│
-│── util/
-│   └── errorHandler.js
-│
-│── App.jsx
-│── main.jsx
-```
-
-## Setup
-
-```bash
-Install dependencies
-npm install
-
-Launch client folder
-npm run dev
-
-Launch server folder
-node server.js
-
-Server URL
-http://localhost:3030
