@@ -16,18 +16,18 @@ React is used to build the user interface and manage the client-side application
 ------------------------------------------------------------------------
 ## Table of Contents
 
-- [Project Overview](#project-overview)
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Application Structure](#application-structure)
-- [Backend and Database Overview](#backend-and-database-overview)
-- [Installation and Configuration](#installation-and-configuration)
-- [Deployment](#deployment)
-- [Project Requirements and Implementation](#project-requirements-and-implementation)
+- [1. Project Overview](#1-project-overview)
+- [2. Features](#2-features)
+- [3. Technology Stack](#3-technology-stack)
+- [4. Application Structure](#4-application-structure)
+- [5. Backend and Database Overview](#5-backend-and-database-overview)
+- [6. Installation and Configuration](#6-installation-and-configuration)
+- [7. Deployment](#7-deployment)
+- [8. Project Requirements and Implementation](#8-project-requirements-and-implementation)
 
 
 ### Functional Guide
-- [Project Overview](#project-overview)
+- [Overview](#overview)
 - [User Access & Permissions](#user-access--permissions)
 - [Authentication & Session Handling](#authentication--session-handling)
 - [Routing Structure](#routing-structure)
@@ -41,7 +41,7 @@ React is used to build the user interface and manage the client-side application
 - [Conclusion](#conclusion)
 
 ------------------------------------------------------------------------
-## Project Overview
+## 1. Project Overview
 
 **Application name:** Jogo Bonito Store
 
@@ -55,7 +55,7 @@ manage their own boot products, interact through likes,
 and discuss using comments. The application combines product
 discovery with user-generated content and account-based permissions.
 
-## Features
+## 2. Features
 
 -   Public home page with the three most-liked and three newest boot
     products.
@@ -75,7 +75,7 @@ discovery with user-generated content and account-based permissions.
 
 ------------------------------------------------------------------------
 
-## Technology Stack
+## 3. Technology Stack
 
   ---------------------------------------------------------------------
   | Technology | Purpose |
@@ -93,7 +93,7 @@ discovery with user-generated content and account-based permissions.
   
 ------------------------------------------------------------------------
 
-## Application Structure
+## 4. Application Structure
 
 The frontend application is located in the `client/` directory.
 
@@ -305,7 +305,7 @@ prevent users from modifying or deleting another user's records.
 
 # React Exam Functional Guide
 
-## 1. Project Overview
+## 1. Overview
 
 **Application Name:** Joga Bonito Store
 
@@ -321,7 +321,7 @@ about each pair of boots. Registered users can contribute their own
 products, edit or remove their products, like boots, and post comments,
 creating a small community around football footwear.
 
-## 2. User Access & Permissions
+## 2. User Access and Permissions
 
 ### Guest (Not Authenticated)
 
@@ -379,7 +379,7 @@ functionality.
 -   Database-level authorization should additionally be enforced through
     Supabase RLS policies.
 
-## 3. Authentication & Session Handling
+## 3. Authentication and Session Handling
 
 ### Authentication Flow
 
@@ -530,7 +530,7 @@ comments, and owner-specific edit/delete actions. After successful
 actions, the component refreshes the relevant data or navigates back to
 the catalog/details page.
 
-## 6. Data Source & Backend
+## 6. Data Source and Backend
 
 **Backend Type:** Backend-as-a-Service (BaaS) -- Supabase.
 
@@ -678,7 +678,7 @@ RLS must prevent deletion of records owned by other users.
 -   A user can delete only their own comments through the owner check in
     the UI; database policies should enforce this restriction as well.
 
-## 8. Forms & Validation
+## 8. Forms and Validation
 
 The application validates input before sending data to Supabase. Validation helps prevent empty or incorrectly formatted values from being submitted.
 
@@ -736,7 +736,7 @@ custom form hook tracks values, validation errors, and touched fields,
 and prevents the submit callback from running when validation errors
 exist.
 
-## 9. React-Specific Techniques
+## 9. React Specific Techniques
 
 ### Hooks & Component Lifecycle
 
@@ -804,7 +804,7 @@ A typical guest-to-user flow is:
 
 This flow demonstrates how routing, authentication, database operations, and conditional rendering work together.
 
-## 11. Error & Edge Case Handling
+## 11. Error and Edge Case Handling
 
 ### Authentication Errors
 
