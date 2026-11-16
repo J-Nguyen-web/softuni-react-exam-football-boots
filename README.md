@@ -12,7 +12,7 @@ React is used to build the user interface and manage the client-side application
 -   **GitHub repository:**
     https://github.com/J-Nguyen-web/softuni-react-exam-football-boots
 -   **Live application:** https://react-exam-joga-bonito.netlify.app
--   **Backend:** [Supabase Project](https://lszvorpydbjbkzteapey.supabase.co)
+-   **Backend:** [Supabase Project](https://lszvorpydbjbkzteapey.supabase.co/rest/v1/)
 
 ------------------------------------------------------------------------
 ## ⚠️ Notice – Deployment Status and Known Issues
