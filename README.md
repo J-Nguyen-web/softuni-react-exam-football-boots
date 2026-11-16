@@ -14,6 +14,21 @@ React is used to build the user interface and manage the client-side application
 -   **Live application:** https://react-exam-joga-bonito.netlify.app
 
 ------------------------------------------------------------------------
+## ⚠️ Notice – Deployment Status and Known Issues
+
+The project is currently deployed on Netlify, but the latest changes could not be deployed due to the monthly credit limit being reached. Therefore, the live version may not reflect the latest state of the source code.
+
+Known limitations:
+
+Search: The search functionality currently works only on the Catalog page.
+
+Terrains navigation: The Terrains# link to specific section in terrains page may not navigate to the intended section correctly because of missing _redirects file that netlify needs for such operation.
+
+These issues are acknowledged and may be addressed in future updates.
+
+------------------------------------------------------------------------
+
+
 ## Table of Contents
 
 - [1. Project Overview](#1-project-overview)
