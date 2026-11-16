@@ -27,17 +27,17 @@ React is used to build the user interface and manage the client-side application
 
 
 ### Functional Guide
-- [Overview](#overview)
-- [User Access & Permissions](#user-access--permissions)
-- [Authentication & Session Handling](#authentication--session-handling)
-- [Routing Structure](#routing-structure)
-- [List → Details Flow](#list--details-flow)
-- [Data Source & Backend](#data-source--backend)
-- [Data Operations (CRUD)](#data-operations-crud)
-- [Forms & Validation](#forms--validation)
-- [React-Specific Techniques](#react-specific-techniques)
-- [Typical User Flow](#typical-user-flow)
-- [Error & Edge Case Handling](#error--edge-case-handling)
+- [1. Overview](#1-overview)
+- [2. User Access & Permissions](#2-user-access-and-permissions)
+- [3. Authentication & Session Handling](#3-authentication-and-session-handling)
+- [4. Routing Structure](#4-routing-structure)
+- [5. List → Details Flow](#5-list-to-details-flow)
+- [6. Data Source & Backend](#6-data-source--backend)
+- [7. Data Operations (CRUD)](#7-data-operations-crud)
+- [8. Forms & Validation](#8-forms-and-validation)
+- [9. React-Specific Techniques](#react-specific-techniques)
+- [10. Typical User Flow](#10-typical-user-flow)
+- [11. Error & Edge Case Handling](#11-error-and-edge-case-handling)
 - [Conclusion](#conclusion)
 
 ------------------------------------------------------------------------
@@ -484,7 +484,7 @@ const { bootsId } = useParams();
 
 The value is then used to retrieve the corresponding boot from Supabase.
 
-## 5. List → Details Flow
+## 5. List to Details Flow
 
 ### Boots Catalog
 
